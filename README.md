@@ -1,3 +1,3 @@
 # whatsApp
 
-- Android communication application 
+- Android instant messaging application with usage of remote server.
