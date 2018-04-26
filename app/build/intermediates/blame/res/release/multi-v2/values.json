@@ -1,0 +1,43 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml",
+            "map": [
+                {
+                    "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/src/main/res/values/colors.xml",
+                    "from": {
+                        "startLines": "5,7,4,6",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "98,178,57,138",
+                        "endColumns": "39,38,40,39",
+                        "endOffsets": "133,212,93,173"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,95,134,175",
+                        "endColumns": "39,38,40,39",
+                        "endOffsets": "90,129,170,210"
+                    }
+                },
+                {
+                    "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "57",
+                        "endColumns": "46",
+                        "endOffsets": "99"
+                    },
+                    "to": {
+                        "startLines": "6",
+                        "startColumns": "4",
+                        "startOffsets": "215",
+                        "endColumns": "46",
+                        "endOffsets": "257"
+                    }
+                }
+            ]
+        }
+    ]
+}
