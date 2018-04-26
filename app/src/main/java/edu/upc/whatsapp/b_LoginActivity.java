@@ -43,10 +43,10 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
 
   public void onClick(View arg0) {
     if (arg0 == findViewById(R.id.editloginButton)) {
-
+        toastShow("testing fuctions");
         //...
 
-        progressDialog = ProgressDialog.show(this, "LoginActivity", "Logging into the server...");
+        //progressDialog = ProgressDialog.show(this, "LoginActivity", "Logging into the server...");
         // if there's still a running thread doing something, we don't create a new one
         if (operationPerformer == null) {
           operationPerformer = new OperationPerformer();

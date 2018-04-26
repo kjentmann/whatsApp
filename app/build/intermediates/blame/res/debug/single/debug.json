@@ -32,6 +32,10 @@
         "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/src/main/res/drawable/coms.jpg"
     },
     {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/res/merged/debug/drawable_signal.png.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/src/main/res/drawable/signal.png"
+    },
+    {
         "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/res/merged/debug/drawable_app_logo.jpg.flat",
         "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/src/main/res/drawable/app_logo.jpg"
     },
@@ -54,6 +58,10 @@
     {
         "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/res/merged/debug/layout_c_registration.xml.flat",
         "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/src/main/res/layout/c_registration.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/res/merged/debug/drawable_coms_orginal.jpg.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/src/main/res/drawable/coms_orginal.jpg"
     },
     {
         "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/res/merged/debug/drawable_mail_small.jpg.flat",

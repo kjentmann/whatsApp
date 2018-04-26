@@ -5,24 +5,24 @@
     build-mode="FULL"
     density="420dpi"
     format="10"
-    ir-eligibility="CLASS_ADDED"
+    ir-eligibility="R_CLASS_CHANGE"
     plugin-version="3.1.2"
-    timestamp="1524748892602"
+    timestamp="1524761056262"
     token="203788797963823179"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="134" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="81" />
+        duration="24" />
     <task
         name="verifier"
-        duration="9" />
+        duration="3" />
 
     <artifact
         location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
@@ -31,22 +31,22 @@
         location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
         type="SPLIT" />
     <artifact
-        location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
-        type="SPLIT" />
-    <artifact
         location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
         type="SPLIT" />
     <artifact
         location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
         type="SPLIT" />
     <artifact
-        location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+        location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
         type="SPLIT" />
     <artifact
         location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
         type="SPLIT" />
     <artifact
-        location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
+        location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
         type="SPLIT" />
     <artifact
         location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
@@ -66,8 +66,8 @@
 
     <build
         build-mode="FULL"
-        ir-eligibility="CLASS_ADDED"
-        timestamp="1524748892602"
+        ir-eligibility="R_CLASS_CHANGE"
+        timestamp="1524761056262"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
@@ -76,22 +76,22 @@
             location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
             type="SPLIT" />
         <artifact
-            location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
-            type="SPLIT" />
-        <artifact
             location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
             type="SPLIT" />
         <artifact
             location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
             type="SPLIT" />
         <artifact
-            location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+            location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
+            type="SPLIT" />
+        <artifact
+            location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
             type="SPLIT" />
         <artifact
             location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
             type="SPLIT" />
         <artifact
-            location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
+            location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
             type="SPLIT" />
         <artifact
             location="/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/split-apk/debug/slices/slice_6.apk"

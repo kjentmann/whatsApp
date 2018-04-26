@@ -1,19 +1,7 @@
 #Internal package file, do not edit.
-#Thu Apr 26 15:21:36 CEST 2018
-1.base=/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/transforms/dexMerger/debug/130
-2.path=classes.dex
+#Thu Apr 26 18:45:34 CEST 2018
 0.baseType=DIRECTORY
-3.baseType=DIRECTORY
-2.base=/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/transforms/dexMerger/debug/133
-3.set=DEX
-2.set=DEX
-1.baseType=DIRECTORY
-3.path=classes.dex
-count=4
-1.set=DEX
+0.base=/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/transforms/dexMerger/debug/152
 0.path=classes.dex
-3.base=/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/transforms/dexMerger/debug/131
 0.set=DEX
-0.base=/home/madsoft/AndroidStudioProjects/WhatsApp_exercise/app/build/intermediates/transforms/dexMerger/debug/132
-2.baseType=DIRECTORY
-1.path=classes.dex
+count=1

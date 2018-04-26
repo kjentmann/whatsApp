@@ -549,7 +549,7 @@ public final class R {
      * <tr><td>barrier</td><td>2</td><td></td></tr>
      * <tr><td>chains</td><td>4</td><td></td></tr>
      * <tr><td>dimensions</td><td>8</td><td></td></tr>
-     * <tr><td>direct</td><td>1</td><td>for now only direct & barriers</td></tr>
+     * <tr><td>direct</td><td>1</td><td></td></tr>
      * <tr><td>none</td><td>0</td><td></td></tr>
      * <tr><td>standard</td><td>3</td><td></td></tr>
      * </table>
@@ -568,9 +568,11 @@ public final class R {
     public static final int bubble_green=0x7f030002;
     public static final int bubble_yellow=0x7f030003;
     public static final int coms=0x7f030004;
-    public static final int mail=0x7f030005;
-    public static final int mail_small=0x7f030006;
-    public static final int shape_whatsapp_date=0x7f030007;
+    public static final int coms_orginal=0x7f030005;
+    public static final int mail=0x7f030006;
+    public static final int mail_small=0x7f030007;
+    public static final int shape_whatsapp_date=0x7f030008;
+    public static final int signal=0x7f030009;
   }
   public static final class id {
     public static final int barrier=0x7f040000;
@@ -588,52 +590,51 @@ public final class R {
     public static final int editregistrationButton=0x7f04000c;
     public static final int end=0x7f04000d;
     public static final int gone=0x7f04000e;
-    public static final int imageView=0x7f04000f;
-    public static final int imageView2=0x7f040010;
-    public static final int imageView3=0x7f040011;
-    public static final int input=0x7f040012;
-    public static final int invisible=0x7f040013;
-    public static final int left=0x7f040014;
-    public static final int listView=0x7f040015;
-    public static final int login=0x7f040016;
-    public static final int login_input=0x7f040017;
-    public static final int messages=0x7f040018;
-    public static final int mybutton=0x7f040019;
-    public static final int none=0x7f04001a;
-    public static final int packed=0x7f04001b;
-    public static final int parent=0x7f04001c;
-    public static final int password_input=0x7f04001d;
-    public static final int password_text=0x7f04001e;
-    public static final int percent=0x7f04001f;
-    public static final int registration=0x7f040020;
-    public static final int right=0x7f040021;
-    public static final int row_content=0x7f040022;
-    public static final int row_date=0x7f040023;
-    public static final int row_hour=0x7f040024;
-    public static final int row_twotextviews_name=0x7f040025;
-    public static final int row_twotextviews_surname=0x7f040026;
-    public static final int spread=0x7f040027;
-    public static final int spread_inside=0x7f040028;
-    public static final int standard=0x7f040029;
-    public static final int start=0x7f04002a;
-    public static final int student_name=0x7f04002b;
-    public static final int subject=0x7f04002c;
-    public static final int text_email=0x7f04002d;
-    public static final int text_name=0x7f04002e;
-    public static final int text_password=0x7f04002f;
-    public static final int text_surname=0x7f040030;
-    public static final int text_username=0x7f040031;
-    public static final int title=0x7f040032;
-    public static final int top=0x7f040033;
-    public static final int username_text=0x7f040034;
-    public static final int usersList=0x7f040035;
-    public static final int welcome=0x7f040036;
-    public static final int welcomeLinearLayout=0x7f040037;
-    public static final int welcomeLoginButton=0x7f040038;
-    public static final int welcomeLogoImageView=0x7f040039;
-    public static final int welcomeMessageTextView=0x7f04003a;
-    public static final int welcomeRegisterButton=0x7f04003b;
-    public static final int wrap=0x7f04003c;
+    public static final int grayBackground=0x7f04000f;
+    public static final int imageView=0x7f040010;
+    public static final int input=0x7f040011;
+    public static final int invisible=0x7f040012;
+    public static final int left=0x7f040013;
+    public static final int listView=0x7f040014;
+    public static final int login=0x7f040015;
+    public static final int login_input=0x7f040016;
+    public static final int messages=0x7f040017;
+    public static final int mybutton=0x7f040018;
+    public static final int none=0x7f040019;
+    public static final int packed=0x7f04001a;
+    public static final int parent=0x7f04001b;
+    public static final int password_input=0x7f04001c;
+    public static final int password_text=0x7f04001d;
+    public static final int percent=0x7f04001e;
+    public static final int registration=0x7f04001f;
+    public static final int right=0x7f040020;
+    public static final int row_content=0x7f040021;
+    public static final int row_date=0x7f040022;
+    public static final int row_hour=0x7f040023;
+    public static final int row_twotextviews_name=0x7f040024;
+    public static final int row_twotextviews_surname=0x7f040025;
+    public static final int spread=0x7f040026;
+    public static final int spread_inside=0x7f040027;
+    public static final int standard=0x7f040028;
+    public static final int start=0x7f040029;
+    public static final int student_name=0x7f04002a;
+    public static final int subject=0x7f04002b;
+    public static final int text_email=0x7f04002c;
+    public static final int text_name=0x7f04002d;
+    public static final int text_password=0x7f04002e;
+    public static final int text_surname=0x7f04002f;
+    public static final int text_username=0x7f040030;
+    public static final int title=0x7f040031;
+    public static final int top=0x7f040032;
+    public static final int username_text=0x7f040033;
+    public static final int usersList=0x7f040034;
+    public static final int welcome=0x7f040035;
+    public static final int welcomeLinearLayout=0x7f040036;
+    public static final int welcomeLoginButton=0x7f040037;
+    public static final int welcomeLogoImageView=0x7f040038;
+    public static final int welcomeMessageTextView=0x7f040039;
+    public static final int welcomeRegisterButton=0x7f04003a;
+    public static final int wrap=0x7f04003b;
   }
   public static final class layout {
     public static final int a_welcome=0x7f050000;
@@ -1658,7 +1659,7 @@ public final class R {
      * <tr><td>barrier</td><td>2</td><td></td></tr>
      * <tr><td>chains</td><td>4</td><td></td></tr>
      * <tr><td>dimensions</td><td>8</td><td></td></tr>
-     * <tr><td>direct</td><td>1</td><td>for now only direct & barriers</td></tr>
+     * <tr><td>direct</td><td>1</td><td></td></tr>
      * <tr><td>none</td><td>0</td><td></td></tr>
      * <tr><td>standard</td><td>3</td><td></td></tr>
      * </table>
