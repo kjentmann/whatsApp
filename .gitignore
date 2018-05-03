@@ -2,3 +2,4 @@ client/app/build/
 client/.gradle/
 client/.idea/
 client/local.properties
+server/build/
