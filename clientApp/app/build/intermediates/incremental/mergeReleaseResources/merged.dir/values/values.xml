@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="black">#000000</color>
-    <color name="grey">#cecfd1</color>
-    <color name="orange">#af4a05</color>
-    <color name="white">#FFFFFF</color>
-    <string name="app_name">_WhatsApp</string>
-</resources>

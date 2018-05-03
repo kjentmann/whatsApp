@@ -1,4 +1,4 @@
-clientApp/app/build/
-clientApp/.gradle/
-clientApp/.idea/
-clientApp/local.properties
+client/app/build/
+client/.gradle/
+client/.idea/
+client/local.properties
