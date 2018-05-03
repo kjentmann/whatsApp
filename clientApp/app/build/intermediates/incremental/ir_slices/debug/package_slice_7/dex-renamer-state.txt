@@ -1,0 +1,4 @@
+#Thu May 03 15:47:57 CEST 2018
+base.0=/home/madsoft/code/whatsApp/client/app/build/intermediates/transforms/dexMerger/debug/8
+path.0=classes.dex
+renamed.0=classes.dex

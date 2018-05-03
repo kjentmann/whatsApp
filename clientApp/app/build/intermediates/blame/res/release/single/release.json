@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/layout_e_messages.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/layout/e_messages.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/layout_a_welcome.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/layout/a_welcome.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_bubble_yellow.9.png.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/bubble_yellow.9.png"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_coms_orginal.jpg.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/coms_orginal.jpg"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/layout_c_registration.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/layout/c_registration.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/layout_row_whatsapp_left_bubble.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/layout/row_whatsapp_left_bubble.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/layout_b_login.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/layout/b_login.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_app_logo.jpg.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/app_logo.jpg"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_mail_small.jpg.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/mail_small.jpg"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_mail.jpg.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/mail.jpg"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_background_picture.png.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/background_picture.png"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_bubble_green.9.png.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/bubble_green.9.png"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_coms.jpg.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/coms.jpg"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_signal.png.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/signal.png"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/layout_d_userslist.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/layout/d_userslist.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/layout_row_twotextviews.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/layout/row_twotextviews.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/layout_row_whatsapp_right_bubble.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/layout/row_whatsapp_right_bubble.xml"
+    },
+    {
+        "merged": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/build/intermediates/res/merged/release/drawable_shape_whatsapp_date.xml.flat",
+        "source": "/home/madsoft/AndroidStudioProjects/WhatsApp_madsoft/app/src/main/res/drawable/shape_whatsapp_date.xml"
+    }
+]
