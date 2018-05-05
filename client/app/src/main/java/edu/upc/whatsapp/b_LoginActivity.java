@@ -49,17 +49,15 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
     if (arg0 == findViewById(R.id.editloginButton)) {
         EditText login_input   = (EditText)findViewById(R.id.login_input);
         EditText password_input   = (EditText)findViewById(R.id.password_input);
-
-        User loginActivity = new User();
-        loginActivity.setLogin(login_input.getText().toString());
-        loginActivity.setPassword(password_input.getText().toString());
+        user = new User();
+        user.setLogin(login_input.getText().toString());
+        user.setPassword(password_input.getText().toString());
               //...
-        RPC.login(loginActivity);
         progressDialog = ProgressDialog.show(this, "LoginActivity", "Logging into the server...");
         // if there's still a running thread doing something, we don't create a new one
         if (operationPerformer == null) {
-      //    operationPerformer = new OperationPerformer();
-    //      operationPerformer.start();
+          operationPerformer = new OperationPerformer();
+          operationPerformer.start();
         }
     }
   }
@@ -70,10 +68,10 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
     public void run() {
       Message msg = handler.obtainMessage();
       Bundle b = new Bundle();
-     // b.getBinder(login_input);
-      //b.getCharArray(globalState.)
+      UserInfo userRequest = new UserInfo();
+      userRequest = RPC.login(user);
+      b.putSerializable("userInfo",userRequest);
       //...
-
       msg.setData(b);
       handler.sendMessage(msg);
     }

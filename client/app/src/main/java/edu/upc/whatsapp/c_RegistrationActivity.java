@@ -34,10 +34,51 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
 
   }
 
+  private String parameterCheck(User user){
+      if (user.getLogin().length()<3)
+          return "ERROR: 'User' must be more than 5 characters.";
+      else if (user.getPassword().length()<6)
+          return "ERROR: 'Password' must be more than 3 characters.";
+      else if (!user.getEmail().contains("@") || !user.getEmail().contains(".")|| user.getEmail().length()<7)
+          return "ERROR: 'Email format not accepted.";
+      else if (user.getUserInfo().getName().length()<2)
+        return "ERROR: 'Name' format not accepted";
+      else if (user.getUserInfo().getSurname().length()<2)
+          return "ERROR: 'Surname' format not accepted";
+      return "";
+  }
+
+
   public void onClick(View arg0) {
     if (arg0 == findViewById(R.id.editregistrationButton)) {
 
-      //...
+      EditText login_input      = (EditText)findViewById(R.id.username_input);
+      EditText password_input   = (EditText)findViewById(R.id.password_input);
+      EditText name_input       = (EditText)findViewById(R.id.name_input);
+      EditText surname_input    = (EditText)findViewById(R.id.surname_input);
+      EditText email_input      = (EditText)findViewById(R.id.email_input);
+
+
+
+      user = new User();
+      UserInfo usrInfo = new UserInfo();
+      usrInfo.setName(name_input.getText().toString());
+      usrInfo.setSurname(surname_input.getText().toString());
+      user.setLogin(login_input.getText().toString());
+      user.setPassword(password_input.getText().toString());
+      user.setId(usrInfo.getId());
+      user.setEmail(email_input.getText().toString());
+      user.setUserInfo(usrInfo);
+
+      String paramTest = parameterCheck(user);
+      if (paramTest!=""){
+          toastShow(paramTest);
+          user=null;
+          return;
+        }
+
+      //
+      //
 
       progressDialog = ProgressDialog.show(this, "RegistrationActivity", "Registering for service...");
       // if there's still a running thread doing something, we don't create a new one
@@ -54,6 +95,9 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
     public void run() {
       Message msg = handler.obtainMessage();
       Bundle b = new Bundle();
+     // UserInfo registrationCandidate = new UserInfo();
+      UserInfo registrationCandidate = RPC.registration(user);
+      b.putSerializable("userInfo",registrationCandidate);
 
       //...
 
@@ -74,7 +118,6 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
       if (userInfo.getId() >= 0) {
         toastShow("Registration successful");
 
-        //...
 
         finish();
       }

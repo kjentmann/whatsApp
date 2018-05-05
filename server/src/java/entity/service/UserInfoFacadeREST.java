@@ -60,13 +60,23 @@ public class UserInfoFacadeREST extends AbstractFacade<UserInfo> {
     return super.find(id);
   }
 
+  //@GET
+  //@Override
+  //@Produces({"application/xml", "application/json"})
+  //public List<UserInfo> findAll() {
+   // return super.findAll();
+  //}
+  
   @GET
   @Override
   @Produces({"application/xml", "application/json"})
   public List<UserInfo> findAll() {
-    return super.findAll();
+    List<UserInfo> all_userinfo = super.findAll();
+    all_userinfo.remove(0);
+    return all_userinfo;
   }
-
+  
+  
   @GET
   @Path("{from}/{to}")
   @Produces({"application/xml", "application/json"})

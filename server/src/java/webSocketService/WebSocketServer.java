@@ -29,7 +29,7 @@ public class WebSocketServer {
   @OnMessage
   public void onMessage(String message, Session session)
     throws IOException, SQLException {
-    System.out.println("onMessage: " + message);
+    System.out.println("INFO -> Server -> WebSocket -> onMessage: " + message);
     UserInfo userInfo = gson.fromJson(message, UserInfo.class);
     userInfo_ids.put(userInfo.getId(), session);
     sessions.put(session, userInfo.getId());
@@ -37,12 +37,12 @@ public class WebSocketServer {
 
   @OnOpen
   public void onOpen(Session session) {
-    System.out.println("new session: " + session.getId());
+    System.out.println("INFO -> Server -> WebSocket -> new session: " + session.getId());
   }
 
   @OnClose
   public void onClose(Session session) {
-    System.out.println("closed session: " + session.getId());
+    System.out.println("INFO -> Server -> WebSocket -> closed session: " + session.getId());
     int userInfo_id = sessions.get(session);
     sessions.remove(session);
     userInfo_ids.remove(userInfo_id);
@@ -60,7 +60,7 @@ public class WebSocketServer {
       try {
         String json_message = gson.toJson(message);
         session.getBasicRemote().sendText(json_message);
-        System.out.println("Sending: " + json_message + "\nto session_Id:" + session.getId());
+        System.out.println("INFO -> Server -> WebSocket ->  Sending: " + json_message + "\nto session_Id:" + session.getId());
       } catch (Exception e) {
         e.printStackTrace();
       }

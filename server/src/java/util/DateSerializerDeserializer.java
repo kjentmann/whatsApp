@@ -30,15 +30,15 @@ public class DateSerializerDeserializer implements JsonDeserializer<Date>, JsonS
   public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     for (String format : DATE_FORMATS) {
       try {
-        System.out.println("received date to deserialize: "+json.getAsString());
+        System.out.println("INFO -> Server -> Serializer -> received date to deserialize: "+json.getAsString());
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         Date date = sdf.parse(json.getAsString());
-        System.out.println("translated to server local hour: "+date.toString());
+        System.out.println("INFO -> Server -> Serializer -> translated to server local hour: "+date.toString());
         return date;
       } catch (ParseException e) {
         e.printStackTrace();
-        System.out.println("Unparseable date: " + json.getAsString());
-        System.out.println("error parsing at offset: "+e.getErrorOffset());
+        System.out.println("ERROR -> Server -> Serializer -> Unparseable date: " + json.getAsString());
+        System.out.println("ERROR -> Server -> Serializer -> error parsing at offset: "+e.getErrorOffset());
       }
     }
     //to process Date if it is as Long:
@@ -46,7 +46,7 @@ public class DateSerializerDeserializer implements JsonDeserializer<Date>, JsonS
       return new Date(json.getAsLong());
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("Unparseable date: " + json.getAsString());
+      System.out.println("ERROR -> Server -> Serializer -> Unparseable date: " + json.getAsString());
     }
 
     throw new JsonParseException("Unparseable date: \"" + json.getAsString()
@@ -68,7 +68,7 @@ public class DateSerializerDeserializer implements JsonDeserializer<Date>, JsonS
     
     date_string = add_colon_toZformat(date_string);
     
-    System.out.println("date to be sent formatted as: "+date_string);
+    System.out.println("INFO -> Server -> Serializer -> date to be sent formatted as: "+date_string);
     return new JsonPrimitive(date_string);
   }
 

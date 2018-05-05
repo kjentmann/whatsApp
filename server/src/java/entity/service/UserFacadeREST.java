@@ -107,25 +107,30 @@ public class UserFacadeREST extends AbstractFacade<User> {
       em.persist(entity);
       return entity.getUserInfo();
     } else {
-      UserInfo bad_registration = new UserInfo(-1);
-      return bad_registration;
+        return em.find(UserInfo.class, -1);
+      //UserInfo bad_registration = new UserInfo(-1);
+      //return bad_registration;
     }
   }
+  
+  
 
   @POST
   @Path("login")
   @Consumes({"application/xml", "application/json"})
   @Produces({"application/xml", "application/json"})
   public UserInfo loginUser(User user) {
-    System.out.println("login: " + user.getLogin() + ", password: " + user.getPassword());
+    System.out.println("INFO -> Server -> UserREST -> login: " + user.getLogin() + ", password: " + user.getPassword());
     Query query = em.createQuery("select u from User u where u.login=:login AND u.password=:password");
     query.setParameter("login", user.getLogin());
     query.setParameter("password", user.getPassword());
     try {
       return ((User) query.getSingleResult()).getUserInfo();
     } catch (Exception e) {
-      UserInfo bad_login = new UserInfo(-1);
-      return bad_login;
+      //UserInfo bad_login = new UserInfo(-1);
+      System.out.println("WARNING -> Server -> UserREST -> Bad login.");
+      //return bad_login;
+      return em.find(UserInfo.class, -1);
     }
   }
 
