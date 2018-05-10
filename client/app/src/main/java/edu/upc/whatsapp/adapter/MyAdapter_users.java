@@ -12,7 +12,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import edu.upc.whatsapp.R;
+import edu.upc.whatsapp.comms.RPC;
+import edu.upc.whatsapp.d_UsersListActivity;
 import entity.UserInfo;
 import java.util.List;
 
@@ -37,10 +42,14 @@ public class MyAdapter_users extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
       if (convertView == null) {
         convertView = LayoutInflater.from(context).inflate(R.layout.row_twotextviews, parent, false);
+
       }
-
+        UserInfo user= (UserInfo)getItem(position);
+        TextView firstName = (TextView) ((LinearLayout) convertView).findViewById(R.id.row_twotextviews_name);
+        firstName.setText(user.getName());
+        TextView latsName = (TextView) ((LinearLayout) convertView).findViewById(R.id.row_twotextviews_surname);
+        latsName.setText(user.getSurname());
       //...
-
       return convertView;
     }
 

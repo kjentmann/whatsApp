@@ -89,7 +89,10 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
       if (userInfo.getId() >= 0) {
         toastShow("Login successful");
 
-        //...
+        globalState.my_user=user.getUserInfo();
+        globalState.save_my_user();
+        startActivity(new Intent(b_LoginActivity.this, d_UsersListActivity.class));
+
 
         finish();
       }

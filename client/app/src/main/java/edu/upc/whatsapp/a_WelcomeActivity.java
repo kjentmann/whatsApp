@@ -16,6 +16,8 @@ public class a_WelcomeActivity extends Activity implements View.OnClickListener 
 
     ((Button) findViewById(R.id.welcomeLoginButton)).setOnClickListener(this);
     ((Button) findViewById(R.id.welcomeRegisterButton)).setOnClickListener(this);
+
+
   }
 
   public void onClick(View arg0) {

@@ -49,9 +49,12 @@ public class e_MessagesActivity extends Activity {
     globalState = (_GlobalState) getApplication();
     TextView title = (TextView) findViewById(R.id.title);
     title.setText("Talking with: " + globalState.user_to_talk_to.getName());
+    conversation = (ListView) findViewById(R.id.listView);
     setup_input_text();
 
-    new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
+
+     new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
+
   }
 
   @Override

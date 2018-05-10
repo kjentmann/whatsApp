@@ -74,14 +74,13 @@ public class RPC {
       in.close();
       out.close();
       ucon.getInputStream().close();
-      Log.d("DEBUG","Login success");
       return userInfo;
 
     } catch (Exception e) {
       e.printStackTrace();
       UserInfo userInfo_exception = new UserInfo(-2);
       userInfo_exception.setName(e.getMessage());
-      Log.d("DEBUG","Login failed");
+      Log.d("DEBUG","Login failed, rpc trouble");
       return userInfo_exception;
     }
   }

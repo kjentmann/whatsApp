@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,18 +21,30 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
   MyAdapter_users adapter;
   ProgressDialog progressDialog;
 
-  @Override
+
+
+    @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     globalState = (_GlobalState) getApplication();
     setContentView(R.layout.d_userslist);
     new DownloadUsers_Task().execute();
-  }
+
+    }
+
 
   @Override
   public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-
-    //...
+      Log.d("DEBUG","clicked id : "+id+"pos: "+position);
+      UserInfo clickedUser = (UserInfo) adapter.getItem(position);
+      toastShow("you pressed "+ clickedUser.getName());
+      globalState.user_to_talk_to = clickedUser;
+      globalState.load_my_user();
+      //globalState.my_user
+      Log.d("DEBUG","ME: id :"+globalState.my_user +"him : "+ globalState.user_to_talk_to);
+//      startActivity(new Intent(this, e_MessagesActivity.class));
+      //...
+      finish();
 
   }
 
@@ -46,11 +59,8 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     @Override
     protected List<UserInfo> doInBackground(Void... nothing) {
 
+     return RPC.allUserInfos();
       //...
-
-      //remove this sentence on completing the code:
-      return null;
-
     }
 
     @Override
@@ -59,9 +69,13 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
       if (users == null) {
         toastShow("There's been an error downloading the users");
       } else {
-
-        //...
-
+          Log.d("DEBUG","Downloaded users. They exist!" );
+          ListView listView =  findViewById(R.id.listView);
+          adapter = new MyAdapter_users(d_UsersListActivity.this,users);
+          listView.setAdapter(adapter);
+          listView.setOnItemClickListener(d_UsersListActivity.this);
+          Log.d("DEBUG","On click listener ready!");
+          //...
       }
     }
   }
@@ -71,5 +85,4 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     toast.setGravity(0, 0, 200);
     toast.show();
   }
-
 }

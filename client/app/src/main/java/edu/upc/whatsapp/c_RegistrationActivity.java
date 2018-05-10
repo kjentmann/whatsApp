@@ -101,6 +101,7 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
 
       //...
 
+
       msg.setData(b);
       handler.sendMessage(msg);
     }
@@ -112,6 +113,7 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
 
       operationPerformer = null;
       progressDialog.dismiss();
+
 
       UserInfo userInfo = (UserInfo) msg.getData().getSerializable("userInfo");
 
