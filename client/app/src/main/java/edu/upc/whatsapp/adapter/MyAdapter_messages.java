@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import android.util.Log;
 import edu.upc.whatsapp.R;
 import entity.Message;
 import entity.UserInfo;
@@ -82,6 +82,7 @@ public class MyAdapter_messages extends BaseAdapter {
     ((TextView) convertView.findViewById(R.id.row_date)).setText(sdf.format(date));
 
     //...
+    ((TextView)convertView.findViewById(R.id.row_content)).setText(messages.get(position).getContent());
 
     ((TextView) convertView.findViewById(R.id.row_hour)).setText(sdf2.format(date));
 
@@ -98,12 +99,13 @@ public class MyAdapter_messages extends BaseAdapter {
 
   @Override
   public int getItemViewType(int position) {
-
-    //...
-
-    //remove this sentence on completing the code:
-    return -1;
-  }
+      if (messages.get(position).getUserSender().getId() == my_user.getId()){
+      return 0;
+    }
+    else{
+      return 1;
+    }
+  }//...
 
   @Override
   public int getViewTypeCount() {
@@ -130,5 +132,4 @@ public class MyAdapter_messages extends BaseAdapter {
       date_visibility.add(View.GONE);
     }
   }
-
 }

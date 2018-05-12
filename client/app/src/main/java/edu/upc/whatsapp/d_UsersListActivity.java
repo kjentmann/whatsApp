@@ -28,6 +28,7 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     super.onCreate(savedInstanceState);
     globalState = (_GlobalState) getApplication();
     setContentView(R.layout.d_userslist);
+    globalState.load_my_user();
     new DownloadUsers_Task().execute();
 
     }
@@ -37,14 +38,10 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
   public void onItemClick(AdapterView<?> l, View v, int position, long id) {
       Log.d("DEBUG","clicked id : "+id+"pos: "+position);
       UserInfo clickedUser = (UserInfo) adapter.getItem(position);
-      toastShow("you pressed "+ clickedUser.getName());
       globalState.user_to_talk_to = clickedUser;
-      globalState.load_my_user();
-      //globalState.my_user
-      Log.d("DEBUG","ME: id :"+globalState.my_user +"him : "+ globalState.user_to_talk_to);
-//      startActivity(new Intent(this, e_MessagesActivity.class));
-      //...
-      finish();
+      Log.d("DEBUG","I am  :"+globalState.my_user.getName() +". And I want to talk to  : "+ globalState.user_to_talk_to.getName());
+      startActivity(new Intent(this, e_MessagesActivity.class));
+      //finish();
 
   }
 

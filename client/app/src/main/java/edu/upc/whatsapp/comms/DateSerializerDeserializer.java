@@ -32,10 +32,10 @@ public class DateSerializerDeserializer implements JsonDeserializer<Date>, JsonS
   public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     for (String format : DATE_FORMATS) {
       try {
-        Log.e("to deserialize: ", json.getAsString());
+       // Log.d("to deserialize: ", json.getAsString());
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         Date date = sdf.parse(json.getAsString());
-        Log.e("local hour: ",date.toString());
+        //Log.d("local hour: ",date.toString());
         return date;
       } catch (ParseException e) {
         e.printStackTrace();
@@ -70,7 +70,7 @@ public class DateSerializerDeserializer implements JsonDeserializer<Date>, JsonS
 
     date_string = add_colon_toZformat(date_string);
 
-    Log.e("hour sent: ",date_string);
+    //Log.e("hour sent: ",date_string);
     return new JsonPrimitive(date_string);
   }
 

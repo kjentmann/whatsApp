@@ -13,6 +13,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.glassfish.tyrus.client.ClientManager;
@@ -46,7 +47,8 @@ public class PushService extends Service {
   public void onCreate() {
     super.onCreate();
     globalState = (_GlobalState) getApplication();
-    toastShow("PushService created");
+    //toastShow("PushService created");
+    Log.d("DEBUG","PushService created");
     timer = new Timer();
     timer.scheduleAtFixedRate(new MyTimerTask(), 0, 120000);
   }
@@ -59,7 +61,7 @@ public class PushService extends Service {
       ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
       NetworkInfo networkInfo = conMan.getActiveNetworkInfo();
       if (networkInfo != null && networkInfo.isConnected() && !connectedToServer) {
-        sendMessageToHandler("open","trying to connect to server!!!");
+        //sendMessageToHandler("open","trying to connect to server!!!");
         connectToServer();
       }
     }
@@ -132,7 +134,7 @@ public class PushService extends Service {
 
         //...
 
-        sendMessageToHandler("open","connection opened");
+        //sendMessageToHandler("open","connection opened");
 
         session.addMessageHandler(new MessageHandler.Whole<String>() {
 
@@ -215,6 +217,7 @@ public class PushService extends Service {
   private void toastShow(String text) {
     Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
     toast.setGravity(0, 0, 200);
+    toast.setDuration(1);
     toast.show();
   }
  

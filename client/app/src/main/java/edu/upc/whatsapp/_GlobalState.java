@@ -2,6 +2,7 @@ package edu.upc.whatsapp;
 
 import android.app.Application;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -25,10 +26,11 @@ public class _GlobalState extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-//    if(isThere_my_user()){
-//      load_my_user();
-//      startService(new Intent(this, PushService.class));
-//    }
+
+    if(isThere_my_user()){
+      load_my_user();
+      startService(new Intent(this, PushService.class));
+    }
   }
 
   public void load_my_user(){
@@ -97,7 +99,7 @@ public class _GlobalState extends Application {
       return messages;
     }
     catch(Exception e){
-      toastShow("Exception at load_messages");
+      Log.d("DEBUG","Exception at load_messages");
       e.printStackTrace();
     }
     return null;

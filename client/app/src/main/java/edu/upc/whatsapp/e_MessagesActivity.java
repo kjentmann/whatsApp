@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,8 +22,12 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,19 +46,22 @@ public class e_MessagesActivity extends Activity {
   private boolean enlarged = false, shrunk = true;
 
   private Timer timer;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.e_messages);
     globalState = (_GlobalState) getApplication();
+    globalState.load_my_user();
     TextView title = (TextView) findViewById(R.id.title);
-    title.setText("Talking with: " + globalState.user_to_talk_to.getName());
-    conversation = (ListView) findViewById(R.id.listView);
+    title.setText("Conversation with " + globalState.user_to_talk_to.getName());
+    conversation = (ListView) findViewById(R.id.conversation);
+    conversation.setAdapter(adapter);
     setup_input_text();
 
 
-     new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
+    timer = new Timer(true);
+    Log.d("DEBUG","I am user ID  :"+globalState.my_user.getId() +"Want to talk to user id : "+ globalState.user_to_talk_to.getId());
+    new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
 
   }
 
@@ -84,10 +92,14 @@ public class e_MessagesActivity extends Activity {
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
 
+      List<Message> msgList;// =  new ArrayList<Message>();
+      msgList =RPC.retrieveMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId());
+      Log.d("DEBUG", "retrive  msgs MSGlist: "+msgList);
+      return msgList;
       //...
 
       //remove this sentence on completing the code:
-      return null;
+     // return null;
     }
 
     @Override
@@ -96,10 +108,14 @@ public class e_MessagesActivity extends Activity {
       if (all_messages == null) {
         toastShow("There's been an error downloading the messages");
       } else {
-        toastShow(all_messages.size()+" messages downloaded");
+       adapter = new MyAdapter_messages(e_MessagesActivity.this,all_messages, globalState.my_user);
+       conversation.setAdapter(adapter);
+        timer.scheduleAtFixedRate(new fetchNewMessagesTimerTask(),0,5 * 1000);
+        Log.d("DEBUG","Timer task activated to fetch new messages..");
 
+
+        toastShow(all_messages.size()+" messages downloaded. Timer started.");
         //...
-
       }
     }
   }
@@ -108,29 +124,38 @@ public class e_MessagesActivity extends Activity {
 
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
-
       //...
-
-      //remove this sentence on completing the code:
-      return null;
+        List<Message> msgList;
+        msgList=RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId(),adapter.getLastMessage());
+        return msgList;
     }
 
     @Override
     protected void onPostExecute(List<Message> new_messages) {
       if (new_messages == null) {
         toastShow("There's been an error downloading new messages");
-      } else {
-        toastShow(new_messages.size()+" new message/s downloaded");
+      } else if (new_messages.size()>0){
+        Log.d("DEBUG", "Fetched "+new_messages.size() + " new msgs  after message id "+adapter.getLastMessage().getId() + "Sending to adapter");
+        adapter.addMessages(new_messages);
+        adapter.notifyDataSetChanged();
 
         //...
-
       }
     }
   }
 
   public void sendText(final View view) {
 
+
     //...
+    String content = input_text.getText().toString();
+    Date date = new Date();
+    Message msg = new Message();
+    msg.setContent(content);
+    msg.setUserReceiver(globalState.user_to_talk_to);
+    msg.setUserSender(globalState.my_user);
+    msg.setDate(date);
+    new SendMessage_Task().execute(msg);
 
     input_text.setText("");
 
@@ -148,21 +173,20 @@ public class e_MessagesActivity extends Activity {
     @Override
     protected Boolean doInBackground(Message... messages) {
 
-      //...
-
-      //remove this sentence on completing the code:
-      return false;
-    }
+      return RPC.postMessage(messages[0]);
+    }      //
 
     @Override
     protected void onPostExecute(Boolean resultOk) {
       if (resultOk) {
+//        adapter.addMessage(messages[0]); FIX: Read sendt message form db instead. less dirty
+        //adapter.notifyDataSetChanged();
+        new fetchNewMessages_Task().execute();
         toastShow("message sent");
-
         //...
-
       } else {
-        toastShow("There's been an error sending the message");
+        toastShow("There has been an network error while sending the message.");
+
       }
     }
   }
@@ -171,6 +195,7 @@ public class e_MessagesActivity extends Activity {
 
     @Override
     public void run() {
+        new fetchNewMessages_Task().execute();
 
       //...
 
@@ -248,6 +273,7 @@ public class e_MessagesActivity extends Activity {
   private void toastShow(String text) {
     Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
     toast.setGravity(0, 0, 200);
+    toast.setDuration(100);
     toast.show();
   }
 
