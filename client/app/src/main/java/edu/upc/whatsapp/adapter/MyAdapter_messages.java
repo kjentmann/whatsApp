@@ -53,8 +53,11 @@ public class MyAdapter_messages extends BaseAdapter {
   public boolean isEmpty(){
     return messages.isEmpty();
   }
+
   public Message getLastMessage(){
-    return messages.get(messages.size() - 1);
+    if (messages.size()>0)
+      return messages.get(messages.size() - 1);
+    return null;
   }
 
   public int getCount() {

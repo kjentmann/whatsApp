@@ -1,4 +1,4 @@
-# whatsApp
+l# whatsApp
 
 - Android client application for online messaging written in Java. 
 - Backend glassfish server connected to mysql database for handeling users and messages.
@@ -6,4 +6,4 @@
 
 
 #Todo
--
+- Fix bug when starting conversation whitout messages.

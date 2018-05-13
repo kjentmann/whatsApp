@@ -159,7 +159,8 @@ public class PushService extends Service {
 
     @Override
     public void onClose(Session session, CloseReason closeReason) {
-      sendMessageToHandler("close","connection closed");
+      //sendMessageToHandler("close","connection closed");
+      Log.d("DEBUG","PushService: Connection Closed");
       connectedToServer = false;
       PushService.this.session = null;
     }
@@ -217,7 +218,7 @@ public class PushService extends Service {
   private void toastShow(String text) {
     Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
     toast.setGravity(0, 0, 200);
-    toast.setDuration(1);
+    toast.setDuration(Toast.LENGTH_SHORT);
     toast.show();
   }
  

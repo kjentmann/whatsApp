@@ -58,7 +58,6 @@ public class e_MessagesActivity extends Activity {
     conversation.setAdapter(adapter);
     setup_input_text();
 
-
     timer = new Timer(true);
     Log.d("DEBUG","I am user ID  :"+globalState.my_user.getId() +"Want to talk to user id : "+ globalState.user_to_talk_to.getId());
     new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
@@ -92,10 +91,29 @@ public class e_MessagesActivity extends Activity {
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
 
-      List<Message> msgList;// =  new ArrayList<Message>();
-      msgList =RPC.retrieveMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId());
-      Log.d("DEBUG", "retrive  msgs MSGlist: "+msgList);
-      return msgList;
+      List<Message> all_messages;
+      if (globalState.isThere_messages()){
+        all_messages=globalState.load_messages();
+        all_messages.addAll(RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId(),all_messages.get(all_messages.size()-1)));
+      }
+      else {
+        all_messages = RPC.retrieveMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId());
+      }
+/*
+      if(msgList.isEmpty()){
+        String content ="Hi "+globalState.my_user.getName()+"! Nice to see you using Mads' app! "+ globalState.user_to_talk_to.getName();
+        Date date = new Date();
+        Message msg = new Message();
+        msg.setContent(content);
+        msg.setUserReceiver(globalState.my_user);
+        msg.setUserSender(globalState.my_user);
+        msg.setDate(date);
+        new SendMessage_Task().execute(msg);
+      }
+*/
+      Log.d("DEBUG", "retrived  msgs MSGlist: " + all_messages);
+
+      return all_messages;
       //...
 
       //remove this sentence on completing the code:
@@ -133,7 +151,9 @@ public class e_MessagesActivity extends Activity {
     @Override
     protected void onPostExecute(List<Message> new_messages) {
       if (new_messages == null) {
-        toastShow("There's been an error downloading new messages");
+        //toastShow("There's been an error downloading new messages");
+        Log.d("DEBUG","There's been an error downloading new messages");
+
       } else if (new_messages.size()>0){
         Log.d("DEBUG", "Fetched "+new_messages.size() + " new msgs  after message id "+adapter.getLastMessage().getId() + "Sending to adapter");
         adapter.addMessages(new_messages);
@@ -141,6 +161,7 @@ public class e_MessagesActivity extends Activity {
 
         //...
       }
+
     }
   }
 
@@ -271,9 +292,9 @@ public class e_MessagesActivity extends Activity {
   }
 
   private void toastShow(String text) {
-    Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+    Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
     toast.setGravity(0, 0, 200);
-    toast.setDuration(100);
+  //  toast.setDuration(Toast.LENGTH_SHORT);
     toast.show();
   }
 

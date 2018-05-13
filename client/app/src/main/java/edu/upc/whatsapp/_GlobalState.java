@@ -29,7 +29,7 @@ public class _GlobalState extends Application {
 
     if(isThere_my_user()){
       load_my_user();
-      startService(new Intent(this, PushService.class));
+      //startService(new Intent(this, PushService.class));   //TODO UNCOMMENT THIS WHEN PUSH
     }
   }
 
