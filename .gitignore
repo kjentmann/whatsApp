@@ -3,5 +3,5 @@ client/.gradle/
 client/.idea/
 client/local.properties
 server/build/
-server/dist/
+
 .idea/
