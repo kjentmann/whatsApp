@@ -7,3 +7,5 @@ l# whatsApp
 
 #Todo
 - Fix bug when starting conversation whitout messages.
+- Finish push service.
+- Save messages locally instead of downloading every time.
