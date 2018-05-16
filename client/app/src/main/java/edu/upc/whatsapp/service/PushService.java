@@ -16,6 +16,9 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.glassfish.tyrus.client.ClientManager;
 
 import java.io.IOException;
@@ -34,6 +37,7 @@ import edu.upc.whatsapp.R;
 import edu.upc.whatsapp._GlobalState;
 import edu.upc.whatsapp.e_MessagesActivity;
 import entity.Message;
+import entity.UserInfo;
 
 import static edu.upc.whatsapp.comms.Comms.ENDPOINT;
 import static edu.upc.whatsapp.comms.Comms.gson;
@@ -61,7 +65,7 @@ public class PushService extends Service {
       ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
       NetworkInfo networkInfo = conMan.getActiveNetworkInfo();
       if (networkInfo != null && networkInfo.isConnected() && !connectedToServer) {
-        //sendMessageToHandler("open","trying to connect to server!!!");
+        sendMessageToHandler("open","trying to connect to server!!!");
         connectToServer();
       }
     }
@@ -107,6 +111,8 @@ public class PushService extends Service {
       client.connectToServer(new PushService.MyEndPoint(),
           ClientEndpointConfig.Builder.create().build(),
           URI.create(ENDPOINT));
+      sendMessageToHandler("open","connected ToServer");
+
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -134,13 +140,22 @@ public class PushService extends Service {
 
         //...
 
-        //sendMessageToHandler("open","connection opened");
+        Gson gson = new Gson();// MySubscriptionClose mySubsClose = new MySubscriptionClose();
+         // mySubsClose.topic = mySubsReq.topic;
+          //mySubsClose.cause = MySubscriptionClose.Cause.SUBSCRIBER;
+          session.getBasicRemote().sendText(gson.toJson(globalState.my_user));
+          //subscriptions.get(session).remove(mySubsReq.topic);
+   //     }
+    //  }
+
+        sendMessageToHandler("open","Push connection opened");
 
         session.addMessageHandler(new MessageHandler.Whole<String>() {
 
           @Override
           public void onMessage(String message) {
-            sendMessageToHandler("message",message);
+
+        sendMessageToHandler("message",message);
           }
         });
 
@@ -180,10 +195,18 @@ public class PushService extends Service {
     public void handleMessage(android.os.Message msg) {
       String type = msg.getData().getCharSequence("type").toString();
       String content = msg.getData().getCharSequence("content").toString();
+
       if(type.equals("message")){
 
-        //...
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+        Message message = (Message) gson.fromJson(content,Message.class);
+        Log.d("DEBUG", "Got push from " + message.getUserSender());
 
+        //if (globalState.MessagesActivity_visible==false){
+          globalState.user_to_talk_to=message.getUserSender();
+        //}
+
+            sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
       }
       else{
         toastShow(content);
@@ -200,12 +223,12 @@ public class PushService extends Service {
     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
     Notification.Builder mBuilder = new Notification.Builder(context)
-      .setContentTitle("_WhatsApp")
+      .setContentTitle("Hurray, new message!")
       .setContentText(content)
-      .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.app_logo))
+      .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.signal))
       .setContentIntent(pendingIntent)
       .setContentInfo("1")
-      .setSmallIcon(R.drawable.app_logo)
+      .setSmallIcon(R.drawable.signal)
       .setAutoCancel(true);
     
     Notification notification = mBuilder.build();

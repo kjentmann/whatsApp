@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.AsyncTask;
+import android.os.Looper;
 import android.util.Log;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 
 import edu.upc.whatsapp.comms.RPC;
 import edu.upc.whatsapp.adapter.MyAdapter_messages;
@@ -67,13 +69,14 @@ public class e_MessagesActivity extends Activity {
   @Override
   protected void onResume() {
     super.onResume();
-
+    globalState.MessagesActivity_visible=true;
     //...
 
   }
 
   @Override
   protected void onPause() {
+    globalState.MessagesActivity_visible=false;
     super.onPause();
 
     //...
@@ -92,14 +95,21 @@ public class e_MessagesActivity extends Activity {
     protected List<Message> doInBackground(Integer... userIds) {
 
       List<Message> all_messages;
-      if (globalState.isThere_messages()){
-        all_messages=globalState.load_messages();
-        all_messages.addAll(RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId(),all_messages.get(all_messages.size()-1)));
+      try {
+        if (globalState.isThere_messages()) {
+          all_messages = globalState.load_messages();
+          all_messages.addAll(RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId(), all_messages.get(all_messages.size() - 1)));
+
+        } else {
+          all_messages = RPC.retrieveMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId());
+          globalState.save_new_messages(all_messages);
+        }
       }
-      else {
-        all_messages = RPC.retrieveMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId());
+      catch (Exception e){
+        Log.d("DEBUG", "Network error while trying to download new messages");
+        all_messages = globalState.load_messages();
       }
-/*
+      /*
       if(msgList.isEmpty()){
         String content ="Hi "+globalState.my_user.getName()+"! Nice to see you using Mads' app! "+ globalState.user_to_talk_to.getName();
         Date date = new Date();
@@ -111,13 +121,8 @@ public class e_MessagesActivity extends Activity {
         new SendMessage_Task().execute(msg);
       }
 */
-      Log.d("DEBUG", "retrived  msgs MSGlist: " + all_messages);
-
+      Log.d("DEBUG", "Returning messageslist: " + all_messages);
       return all_messages;
-      //...
-
-      //remove this sentence on completing the code:
-     // return null;
     }
 
     @Override
@@ -130,10 +135,7 @@ public class e_MessagesActivity extends Activity {
        conversation.setAdapter(adapter);
         timer.scheduleAtFixedRate(new fetchNewMessagesTimerTask(),0,5 * 1000);
         Log.d("DEBUG","Timer task activated to fetch new messages..");
-
-
-        toastShow(all_messages.size()+" messages downloaded. Timer started.");
-        //...
+        toastShow(all_messages.size()+" messages loaded/downloaded.");
       }
     }
   }
@@ -142,11 +144,11 @@ public class e_MessagesActivity extends Activity {
 
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
-      //...
-        List<Message> msgList;
-        msgList=RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId(),adapter.getLastMessage());
-        return msgList;
-    }
+            if(adapter.getLastMessage()!=null) // To aviod trouble with the very first message in a conversation (last message dont exist yet).
+              return  RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId(), adapter.getLastMessage());
+            else
+              return RPC.retrieveMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId());
+        }
 
     @Override
     protected void onPostExecute(List<Message> new_messages) {
@@ -155,10 +157,10 @@ public class e_MessagesActivity extends Activity {
         Log.d("DEBUG","There's been an error downloading new messages");
 
       } else if (new_messages.size()>0){
-        Log.d("DEBUG", "Fetched "+new_messages.size() + " new msgs  after message id "+adapter.getLastMessage().getId() + "Sending to adapter");
+        Log.d("DEBUG", "Fetched "+new_messages.size() + " new msgs. Sending to adapter");
         adapter.addMessages(new_messages);
         adapter.notifyDataSetChanged();
-
+        globalState.save_new_messages(new_messages);
         //...
       }
 
@@ -166,7 +168,6 @@ public class e_MessagesActivity extends Activity {
   }
 
   public void sendText(final View view) {
-
 
     //...
     String content = input_text.getText().toString();
@@ -193,7 +194,9 @@ public class e_MessagesActivity extends Activity {
 
     @Override
     protected Boolean doInBackground(Message... messages) {
-
+     /// if (adapter.getLastMessage()==null){
+       // adapter.addMessage(messages[0]);
+      //}
       return RPC.postMessage(messages[0]);
     }      //
 
@@ -201,9 +204,11 @@ public class e_MessagesActivity extends Activity {
     protected void onPostExecute(Boolean resultOk) {
       if (resultOk) {
 //        adapter.addMessage(messages[0]); FIX: Read sendt message form db instead. less dirty
-        //adapter.notifyDataSetChanged();
+      //  adapter.notifyDataSetChanged();
+
         new fetchNewMessages_Task().execute();
         toastShow("message sent");
+
         //...
       } else {
         toastShow("There has been an network error while sending the message.");
@@ -217,7 +222,6 @@ public class e_MessagesActivity extends Activity {
     @Override
     public void run() {
         new fetchNewMessages_Task().execute();
-
       //...
 
     }
@@ -297,5 +301,4 @@ public class e_MessagesActivity extends Activity {
   //  toast.setDuration(Toast.LENGTH_SHORT);
     toast.show();
   }
-
 }

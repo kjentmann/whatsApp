@@ -27,8 +27,7 @@ public class WebSocketServer {
   private static Map<Integer, Session> userInfo_ids = new HashMap<Integer, Session>();
 
   @OnMessage
-  public void onMessage(String message, Session session)
-    throws IOException, SQLException {
+  public void onMessage(String message, Session session) throws IOException, SQLException {
     System.out.println("INFO -> Server -> WebSocket -> onMessage: " + message);
     UserInfo userInfo = gson.fromJson(message, UserInfo.class);
     userInfo_ids.put(userInfo.getId(), session);
@@ -50,6 +49,7 @@ public class WebSocketServer {
 
   public static void push(Message message) {
     Session session = userInfo_ids.get(message.getUserReceiver().getId());
+        System.out.println("INFO ->Server->WebSocket-> Session of receiver: " + session + "  # userinfo: "+userInfo_ids.size() + " # sessions  " +sessions.size());
     if (session != null) {
       if (!session.isOpen()) {
         int userInfo_id = sessions.get(session);
