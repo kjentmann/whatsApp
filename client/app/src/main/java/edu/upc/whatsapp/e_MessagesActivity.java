@@ -47,7 +47,7 @@ public class e_MessagesActivity extends Activity {
   private Button button;
   private boolean enlarged = false, shrunk = true;
 
-  private Timer timer;
+  //private Timer timer;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -55,14 +55,15 @@ public class e_MessagesActivity extends Activity {
     globalState = (_GlobalState) getApplication();
     globalState.load_my_user();
     TextView title = (TextView) findViewById(R.id.title);
-    title.setText("Conversation with " + globalState.user_to_talk_to.getName());
+    title.setText(globalState.user_to_talk_to.getName() + " " + globalState.user_to_talk_to.getSurname());
     conversation = (ListView) findViewById(R.id.conversation);
     conversation.setAdapter(adapter);
+    setTitle("Conversation. Logged in as " + globalState.my_user.getName()+" "+globalState.my_user.getSurname());
     setup_input_text();
 
     //adapter = new  MyAdapter_messages(e_MessagesActivity.this,globalState.load_messages(), globalState.my_user);
 
-    timer = new Timer(true);
+   // timer = new Timer(true);
     Log.d("DEBUG","I am user ID  :"+globalState.my_user.getId() +"Want to talk to user id : "+ globalState.user_to_talk_to.getId());
     new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
 
@@ -72,20 +73,20 @@ public class e_MessagesActivity extends Activity {
   @Override
   protected void onResume() {
     super.onResume();
-    timer.scheduleAtFixedRate(new fetchNewMessagesTimerTask(),5 * 1000,5 * 1000);
+    //timer.scheduleAtFixedRate(new fetchNewMessagesTimerTask(),5 * 1000,5 * 1000);
 
     globalState.MessagesActivity_visible=true;
     Log.d("DEBUG","On Resume");
     //...
-
+    new fetchNewMessages_Task().execute();
   }
 
   @Override
   protected void onPause() {
     globalState.MessagesActivity_visible=false;
     super.onPause();
-    if(timer!=null)
-      timer.cancel();
+    //if(timer!=null)
+     // timer.cancel();
     Log.d("DEBUG","On Pause");
 
     //...

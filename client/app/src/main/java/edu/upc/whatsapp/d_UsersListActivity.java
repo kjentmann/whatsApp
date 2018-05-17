@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import edu.upc.whatsapp.comms.RPC;
 import edu.upc.whatsapp.adapter.MyAdapter_users;
@@ -31,6 +32,7 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     setContentView(R.layout.d_userslist);
     globalState.load_my_user();
     new DownloadUsers_Task().execute();
+    setTitle("Users list. Logged in as " + globalState.my_user.getName() + " "+globalState.my_user.getSurname());
 
     ((Button) findViewById(R.id.logOutButton)).setOnClickListener(this);
 
