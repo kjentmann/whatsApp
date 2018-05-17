@@ -58,7 +58,7 @@ public class e_MessagesActivity extends Activity {
     title.setText(globalState.user_to_talk_to.getName() + " " + globalState.user_to_talk_to.getSurname());
     conversation = (ListView) findViewById(R.id.conversation);
     conversation.setAdapter(adapter);
-    setTitle("Conversation. Logged in as " + globalState.my_user.getName()+" "+globalState.my_user.getSurname());
+    setTitle("Private conversation. Logged in as " + globalState.my_user.getName()+" "+globalState.my_user.getSurname()+"");
     setup_input_text();
 
     //adapter = new  MyAdapter_messages(e_MessagesActivity.this,globalState.load_messages(), globalState.my_user);
