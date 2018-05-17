@@ -35,8 +35,10 @@ public class MyAdapter_messages extends BaseAdapter {
     my_user = user;
     last_date_shown = "none";
     date_visibility = new ArrayList<Integer>();
+    if(messages!=null){
     for (Message message : messages) {
       set_date_visibility(message);
+      }
     }
   }
 
@@ -55,12 +57,14 @@ public class MyAdapter_messages extends BaseAdapter {
   }
 
   public Message getLastMessage(){
-    if (messages.size()>0)
+    if (!messages.isEmpty())
       return messages.get(messages.size() - 1);
     return null;
   }
 
   public int getCount() {
+      if (messages==null)
+              return 0;
     return messages.size();
   }
 

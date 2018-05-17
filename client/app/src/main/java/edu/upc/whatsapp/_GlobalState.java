@@ -1,6 +1,8 @@
 package edu.upc.whatsapp;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
@@ -29,10 +31,30 @@ public class _GlobalState extends Application {
 
     if(isThere_my_user()){
       load_my_user();
-      startService(new Intent(this, PushService.class));   //TODO UNCOMMENT THIS WHEN PUSH
     }
   }
 
+  public void pushStart(){
+    if (!isPushRunning()) {
+      startService(new Intent(this, PushService.class));   //TODO UNCOMMENT THIS WHEN PUSH
+
+    }
+    }
+  public void pushStop(){
+    stopService((new Intent(this, PushService.class)));   //TODO UNCOMMENT THIS WHEN PUSH
+    stopService((new Intent(this, PushService.MyEndPoint.class)));   //TODO UNCOMMENT THIS WHEN PUSH
+
+  }
+
+  private boolean isPushRunning() {
+    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+    for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+      if (PushService.class.getName().equals(service.service.getClassName())) {
+        return true;
+      }
+    }
+    return false;
+  }
   public void load_my_user(){
     try{
       FileInputStream fis = openFileInput("my_user");

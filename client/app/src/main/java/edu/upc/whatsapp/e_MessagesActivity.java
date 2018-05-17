@@ -60,16 +60,22 @@ public class e_MessagesActivity extends Activity {
     conversation.setAdapter(adapter);
     setup_input_text();
 
+    //adapter = new  MyAdapter_messages(e_MessagesActivity.this,globalState.load_messages(), globalState.my_user);
+
     timer = new Timer(true);
     Log.d("DEBUG","I am user ID  :"+globalState.my_user.getId() +"Want to talk to user id : "+ globalState.user_to_talk_to.getId());
     new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
+
 
   }
 
   @Override
   protected void onResume() {
     super.onResume();
+    timer.scheduleAtFixedRate(new fetchNewMessagesTimerTask(),5 * 1000,5 * 1000);
+
     globalState.MessagesActivity_visible=true;
+    Log.d("DEBUG","On Resume");
     //...
 
   }
@@ -78,6 +84,9 @@ public class e_MessagesActivity extends Activity {
   protected void onPause() {
     globalState.MessagesActivity_visible=false;
     super.onPause();
+    if(timer!=null)
+      timer.cancel();
+    Log.d("DEBUG","On Pause");
 
     //...
 
@@ -133,8 +142,6 @@ public class e_MessagesActivity extends Activity {
       } else {
        adapter = new MyAdapter_messages(e_MessagesActivity.this,all_messages, globalState.my_user);
        conversation.setAdapter(adapter);
-        timer.scheduleAtFixedRate(new fetchNewMessagesTimerTask(),0,5 * 1000);
-        Log.d("DEBUG","Timer task activated to fetch new messages..");
         toastShow(all_messages.size()+" messages loaded/downloaded.");
       }
     }
@@ -144,11 +151,24 @@ public class e_MessagesActivity extends Activity {
 
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
-            if(adapter.getLastMessage()!=null) // To aviod trouble with the very first message in a conversation (last message dont exist yet).
-              return  RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId(), adapter.getLastMessage());
-            else
-              return RPC.retrieveMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId());
-        }
+       //     if(adapter !=null && adapter.getLastMessage()!=null) // To aviod trouble with the very first message in a conversation (last message dont exist yet).
+         //     return  RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId(), adapter.getLastMessage());
+           // else
+             // return RPC.retrieveMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId());
+       //
+      //
+      //
+
+          if(adapter !=null && adapter.getLastMessage()==null) // To aviod trouble with the very first message in a conversation (last message dont exist yet).
+            return RPC.retrieveMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId());
+          else if (adapter != null) return RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId(), adapter.getLastMessage());
+
+          return null;
+      //
+      //
+
+
+    }
 
     @Override
     protected void onPostExecute(List<Message> new_messages) {

@@ -91,6 +91,10 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
         globalState.my_user=userInfo;
         globalState.save_my_user();
 
+        globalState.pushStart();
+        //globalState.pushStop();
+
+
         toastShow("Login successful for "+globalState.my_user.getName());
 
         startActivity(new Intent(b_LoginActivity.this, d_UsersListActivity.class));

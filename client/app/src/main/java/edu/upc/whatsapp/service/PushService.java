@@ -46,6 +46,8 @@ public class PushService extends Service {
 
   private _GlobalState globalState;
   private Timer timer;
+  private boolean connectedToServer;
+  private Session session;
 
   @Override
   public void onCreate() {
@@ -77,10 +79,15 @@ public class PushService extends Service {
     return Service.START_STICKY;
   }
 
+
+
   @Override
   public void onDestroy() {
     super.onDestroy();
+    closeAllNotifications();
     toastShow("PushService destroyed");
+    Log.d("DEBUG", "on destroy push");
+    disconnectFromServer();
     if(timer!=null)
       timer.cancel();
     new Thread(new Runnable() {
@@ -102,17 +109,16 @@ public class PushService extends Service {
     return myBinder;
   }
 
-  private boolean connectedToServer;
-  private Session session;
+
 
   private void connectToServer(){
     try {
       ClientManager client = ClientManager.createClient();
-      client.connectToServer(new PushService.MyEndPoint(),
+      session=client.connectToServer(new PushService.MyEndPoint(),
           ClientEndpointConfig.Builder.create().build(),
           URI.create(ENDPOINT));
       sendMessageToHandler("open","connected ToServer");
-
+      connectedToServer=true;
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -122,9 +128,13 @@ public class PushService extends Service {
     }
   }
   private void disconnectFromServer(){
+    Log.d("DEBUG","Session;"+session);
     if(session!=null){
+      Log.d("DEBUG","Disconnect from server called...");
       try {
         session.close();
+        sendMessageToHandler("close","disconnectFromServer");
+
       } catch (IOException e) {
         e.printStackTrace();
         sendMessageToHandler("error","disconnectFromServer error");
@@ -137,16 +147,9 @@ public class PushService extends Service {
     @Override
     public void onOpen(Session session, EndpointConfig EndpointConfig) {
       try {
+        Gson gson = new Gson();
 
-        //...
-
-        Gson gson = new Gson();// MySubscriptionClose mySubsClose = new MySubscriptionClose();
-         // mySubsClose.topic = mySubsReq.topic;
-          //mySubsClose.cause = MySubscriptionClose.Cause.SUBSCRIBER;
-          session.getBasicRemote().sendText(gson.toJson(globalState.my_user));
-          //subscriptions.get(session).remove(mySubsReq.topic);
-   //     }
-    //  }
+        session.getBasicRemote().sendText(gson.toJson(globalState.my_user));
 
         sendMessageToHandler("open","Push connection opened");
 
@@ -154,7 +157,6 @@ public class PushService extends Service {
 
           @Override
           public void onMessage(String message) {
-
         sendMessageToHandler("message",message);
           }
         });
@@ -176,10 +178,14 @@ public class PushService extends Service {
     public void onClose(Session session, CloseReason closeReason) {
       //sendMessageToHandler("close","connection closed");
       Log.d("DEBUG","PushService: Connection Closed");
+
+      disconnectFromServer();
+
       connectedToServer = false;
       PushService.this.session = null;
     }
   }
+
 
   private void sendMessageToHandler(String type, String content){
     android.os.Message msg = handler.obtainMessage();
@@ -206,7 +212,21 @@ public class PushService extends Service {
           globalState.user_to_talk_to=message.getUserSender();
         //}
 
-            sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
+        /*
+        Intent intent= new intent("helloworld");
+        intent.putextra(message);
+        sendbradcast(intent);
+
+        boradcastreceiver = new receiverhe
+
+                @override
+        pi
+        covnversation.post
+        ;
+        //BROADCAST TO MESSAGE ACTIVIVIT
+
+          */
+      sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
       }
       else{
         toastShow(content);
@@ -236,6 +256,11 @@ public class PushService extends Service {
     
     NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     nm.notify(2, notification);
+  }
+
+  private  void closeAllNotifications(){
+    NotificationManager notifManager= (NotificationManager) this.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+    notifManager.cancelAll();
   }
 
   private void toastShow(String text) {

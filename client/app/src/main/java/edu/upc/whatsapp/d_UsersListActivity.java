@@ -8,19 +8,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import edu.upc.whatsapp.comms.RPC;
 import edu.upc.whatsapp.adapter.MyAdapter_users;
+import edu.upc.whatsapp.service.PushService;
 import entity.UserInfo;
 import java.util.List;
 
-public class d_UsersListActivity extends Activity implements ListView.OnItemClickListener {
+public class d_UsersListActivity extends Activity implements ListView.OnItemClickListener, View.OnClickListener {
 
   _GlobalState globalState;
   MyAdapter_users adapter;
   ProgressDialog progressDialog;
-
 
 
     @Override
@@ -31,8 +32,19 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     globalState.load_my_user();
     new DownloadUsers_Task().execute();
 
-    }
+    ((Button) findViewById(R.id.logOutButton)).setOnClickListener(this);
 
+
+    }
+    public void onClick(View arg0) {
+        globalState.remove_my_user();
+        //globalState.remove_messages();
+        globalState.pushStop();
+        globalState.my_user=null;
+        //unbindService(new Intent(this,PushService.class));
+        stopService(new Intent(this,PushService.class));
+        finish();
+    }
 
   @Override
   public void onItemClick(AdapterView<?> l, View v, int position, long id) {
@@ -70,6 +82,7 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
           ListView listView =  findViewById(R.id.listView);
           adapter = new MyAdapter_users(d_UsersListActivity.this,users);
           listView.setAdapter(adapter);
+          listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
           listView.setOnItemClickListener(d_UsersListActivity.this);
           Log.d("DEBUG","On click listener ready!");
           //...

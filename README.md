@@ -9,3 +9,6 @@ l# whatsApp
 - Fix bug when starting conversation whitout messages.
 - Finish push service.
 - Save messages locally instead of downloading every time.
+- Add a message broadcast in the pushserivce and a reviever in messageactivity to connect the service to the activity
+- Remove the timer from messageactivity, and change onResume() to fetch new messages, only then and on send it is needed. 
+

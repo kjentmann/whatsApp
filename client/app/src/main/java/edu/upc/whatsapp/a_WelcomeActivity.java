@@ -11,13 +11,17 @@ public class a_WelcomeActivity extends Activity implements View.OnClickListener 
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
-
+    _GlobalState globalState = (_GlobalState)getApplication();
     setContentView(R.layout.a_welcome);
 
     ((Button) findViewById(R.id.welcomeLoginButton)).setOnClickListener(this);
     ((Button) findViewById(R.id.welcomeRegisterButton)).setOnClickListener(this);
 
+    if (globalState.my_user!=null){
+      startActivity(new Intent(this, d_UsersListActivity.class));
+      globalState.pushStart();
 
+    }
   }
 
   public void onClick(View arg0) {
