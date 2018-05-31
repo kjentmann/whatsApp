@@ -10,13 +10,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import edu.upc.whatsapp.comms.RPC;
-import edu.upc.whatsapp.adapter.MyAdapter_users;
-import edu.upc.whatsapp.service.PushService;
-import entity.UserInfo;
+
 import java.util.List;
+
+import edu.upc.whatsapp.adapter.MyAdapter_users;
+import edu.upc.whatsapp.comms.RPC;
+import entity.UserInfo;
 
 public class d_UsersListActivity extends Activity implements ListView.OnItemClickListener, View.OnClickListener {
 
@@ -40,23 +40,19 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     }
     public void onClick(View arg0) {
         globalState.remove_my_user();
+        globalState.remove_user_to_talk_to();
         //globalState.remove_messages();
         globalState.pushStop();
         globalState.my_user=null;
-        //unbindService(new Intent(this,PushService.class));
-        stopService(new Intent(this,PushService.class));
         finish();
     }
 
   @Override
   public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-      Log.d("DEBUG","clicked id : "+id+"pos: "+position);
       UserInfo clickedUser = (UserInfo) adapter.getItem(position);
       globalState.user_to_talk_to = clickedUser;
-      Log.d("DEBUG","I am  :"+globalState.my_user.getName() +". And I want to talk to  : "+ globalState.user_to_talk_to.getName());
+      Log.d("DEBUG","I am  :"+globalState.my_user.getName() +". And want to talk to  : "+ globalState.user_to_talk_to.getName());
       startActivity(new Intent(this, e_MessagesActivity.class));
-      //finish();
-
   }
 
   private class DownloadUsers_Task extends AsyncTask<Void, Void, List<UserInfo>> {
@@ -71,7 +67,6 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     protected List<UserInfo> doInBackground(Void... nothing) {
 
      return RPC.allUserInfos();
-      //...
     }
 
     @Override
@@ -87,7 +82,6 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
           listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
           listView.setOnItemClickListener(d_UsersListActivity.this);
           Log.d("DEBUG","On click listener ready!");
-          //...
       }
     }
   }

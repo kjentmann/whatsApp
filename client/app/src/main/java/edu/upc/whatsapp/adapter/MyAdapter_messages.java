@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import android.util.Log;
+
 import edu.upc.whatsapp.R;
 import entity.Message;
 import entity.UserInfo;
@@ -28,10 +28,13 @@ public class MyAdapter_messages extends BaseAdapter {
   private List<Integer> date_visibility;
   private UserInfo my_user;
   private String last_date_shown;
+  private Integer partnerID;
 
-  public MyAdapter_messages(Context context, List<Message> messages, UserInfo user) {
+
+  public MyAdapter_messages(Context context, List<Message> messages, UserInfo user, Integer partnerID) {
     mContext = context;
     this.messages = messages;
+    this.partnerID = partnerID;
     my_user = user;
     last_date_shown = "none";
     date_visibility = new ArrayList<Integer>();
@@ -40,6 +43,10 @@ public class MyAdapter_messages extends BaseAdapter {
       set_date_visibility(message);
       }
     }
+  }
+
+  public Integer getPartnerId(){
+    return partnerID;
   }
 
   public void addMessage(Message new_message){

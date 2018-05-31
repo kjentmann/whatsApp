@@ -1,22 +1,18 @@
 package edu.upc.whatsapp;
 
-import edu.upc.whatsapp.comms.RPC;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.Serializable;
-
-import edu.upc.whatsapp.service.PushService;
+import edu.upc.whatsapp.comms.RPC;
 import entity.User;
 import entity.UserInfo;
 
@@ -33,13 +29,6 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
     super.onCreate(icicle);
     globalState = (_GlobalState)getApplication();
     setContentView(R.layout.b_login);
-    //WindowManager.LayoutParams params = getWindow().getAttributes();
-    //params.x = -100;
-    //params.height = 300;
-    //params.width = 1000;
-    //params.y = -50;
-
-    //this.getWindow().setAttributes(params);
     ((Button) findViewById(R.id.editloginButton)).setOnClickListener(this);
 
 
@@ -77,6 +66,7 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
     }
   }
 
+  @SuppressLint("HandlerLeak")
   Handler handler = new Handler() {
     @Override
     public void handleMessage(Message msg) {
@@ -90,16 +80,11 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
 
         globalState.my_user=userInfo;
         globalState.save_my_user();
-
         globalState.pushStart();
-        //globalState.pushStop();
 
 
         toastShow("Login successful for "+globalState.my_user.getName());
-
         startActivity(new Intent(b_LoginActivity.this, d_UsersListActivity.class));
-
-
         finish();
       }
       else if (userInfo.getId() == -1){

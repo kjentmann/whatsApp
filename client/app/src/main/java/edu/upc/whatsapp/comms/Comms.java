@@ -10,11 +10,11 @@ import java.util.Date;
  */
 public interface Comms {
 
-    //String WhatsApp_server = "46.249.225.122:62987/whatsappServer";      // Remote  glassfish  raspberry pi norway
+    String WhatsApp_server = "46.249.225.122:62987/whatsappServer";      // Remote  glassfish  raspberry pi norway
 
     //    String WhatsApp_server = "192.168.1.105:62990/whatsappServer";      // Local  glassfish server
     //    String WhatsApp_server = "192.168.1.105:22223/whatsappServer";    //For physical phone use
-    String WhatsApp_server = "10.0.2.2:22223/whatsappServer";             //For emulator use
+   // String WhatsApp_server = "10.0.2.2:22223/whatsappServer";             //For emulator use
 
     String url_rpc = "http://"+WhatsApp_server+"/rpc";
   String ENDPOINT = "ws://"+WhatsApp_server+"/push";

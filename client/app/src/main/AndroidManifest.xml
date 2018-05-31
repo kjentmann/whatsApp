@@ -47,5 +47,16 @@
 
         <service android:name=".service.PushService" />
                 
-    </application>
+
+    <!-- Declare receiver for BOOT_COMPLETED event. -->
+    <receiver android:name=".service.Bootup_receiver" android:enabled="true" android:exported="false">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        </intent-filter>
+    </receiver>
+
+</application>
+
+    <!-- Add permission -->
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 </manifest> 

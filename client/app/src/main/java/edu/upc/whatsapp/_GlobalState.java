@@ -66,8 +66,9 @@ public class _GlobalState extends Application {
       fis.close();
     }
     catch(Exception e){
-      toastShow("Exception at load_my_user");
-      e.printStackTrace();
+      //toastShow("Exception when loading whatsapp-user");
+      Log.d("DEBUG","Exception when loading whatsapp-user");
+     // e.printStackTrace();
     }
   }
   public void save_my_user(){
@@ -82,6 +83,45 @@ public class _GlobalState extends Application {
       fos.close();
     } catch (Exception e) {
       toastShow("Exception at save_my_user");
+      e.printStackTrace();
+    }
+  }
+  public void load_user_to_talk_to(){
+    try{
+      FileInputStream fis = openFileInput("user_to_talk_to");
+      BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+
+      user_to_talk_to = gson.fromJson(br, UserInfo.class);
+
+      br.close();
+      fis.close();
+    }
+    catch(Exception e){
+      toastShow("Exception at load_my_user");
+      e.printStackTrace();
+    }
+  }
+  public void save_user_to_talk_to(){
+    try {
+      FileOutputStream fos = openFileOutput("user_to_talk_to", MODE_PRIVATE);
+      PrintWriter pw = new PrintWriter(fos);
+
+      pw.println(gson.toJson(user_to_talk_to));
+
+      pw.flush();
+      pw.close();
+      fos.close();
+    } catch (Exception e) {
+      toastShow("Exception at save_my_user");
+      e.printStackTrace();
+    }
+  }
+  public void remove_user_to_talk_to(){
+    try{
+      deleteFile("user_to_talk_to");
+    }
+    catch(Exception e){
+      toastShow("Exception at remove_my_user");
       e.printStackTrace();
     }
   }

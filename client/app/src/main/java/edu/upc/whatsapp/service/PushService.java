@@ -1,5 +1,6 @@
 package edu.upc.whatsapp.service;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,6 +14,7 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,10 +39,8 @@ import edu.upc.whatsapp.R;
 import edu.upc.whatsapp._GlobalState;
 import edu.upc.whatsapp.e_MessagesActivity;
 import entity.Message;
-import entity.UserInfo;
 
 import static edu.upc.whatsapp.comms.Comms.ENDPOINT;
-import static edu.upc.whatsapp.comms.Comms.gson;
 
 public class PushService extends Service {
 
@@ -53,10 +53,11 @@ public class PushService extends Service {
   public void onCreate() {
     super.onCreate();
     globalState = (_GlobalState) getApplication();
-    //toastShow("PushService created");
+    toastShow("PushService created");
     Log.d("DEBUG","PushService created");
     timer = new Timer();
-    timer.scheduleAtFixedRate(new MyTimerTask(), 0, 120000);
+    timer.scheduleAtFixedRate(new MyTimerTask(), 3000, 120000);
+    globalState.load_my_user();
   }
   
   private class MyTimerTask extends TimerTask {
@@ -67,7 +68,7 @@ public class PushService extends Service {
       ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
       NetworkInfo networkInfo = conMan.getActiveNetworkInfo();
       if (networkInfo != null && networkInfo.isConnected() && !connectedToServer) {
-        sendMessageToHandler("open","trying to connect to server!!!");
+        sendMessageToHandler("open","trying to reconnect to server!");
         connectToServer();
       }
     }
@@ -86,7 +87,7 @@ public class PushService extends Service {
     super.onDestroy();
     closeAllNotifications();
     toastShow("PushService destroyed");
-    Log.d("DEBUG", "on destroy push");
+    Log.d("DEBUG", "onDestroy pushService method called");
     disconnectFromServer();
     if(timer!=null)
       timer.cancel();
@@ -148,11 +149,8 @@ public class PushService extends Service {
     public void onOpen(Session session, EndpointConfig EndpointConfig) {
       try {
         Gson gson = new Gson();
-
         session.getBasicRemote().sendText(gson.toJson(globalState.my_user));
-
         sendMessageToHandler("open","Push connection opened");
-
         session.addMessageHandler(new MessageHandler.Whole<String>() {
 
           @Override
@@ -178,9 +176,7 @@ public class PushService extends Service {
     public void onClose(Session session, CloseReason closeReason) {
       //sendMessageToHandler("close","connection closed");
       Log.d("DEBUG","PushService: Connection Closed");
-
       disconnectFromServer();
-
       connectedToServer = false;
       PushService.this.session = null;
     }
@@ -196,8 +192,10 @@ public class PushService extends Service {
     handler.sendMessage(msg);
   }
 
+  @SuppressLint("HandlerLeak")
   Handler handler = new Handler() {
-    @Override
+
+  @Override
     public void handleMessage(android.os.Message msg) {
       String type = msg.getData().getCharSequence("type").toString();
       String content = msg.getData().getCharSequence("content").toString();
@@ -210,22 +208,18 @@ public class PushService extends Service {
 
         //if (globalState.MessagesActivity_visible==false){
           globalState.user_to_talk_to=message.getUserSender();
+          globalState.save_user_to_talk_to(); // in case of app closed while notification still exist
         //}
 
-        /*
-        Intent intent= new intent("helloworld");
-        intent.putextra(message);
-        sendbradcast(intent);
+        Gson  gsonMsg = new Gson();
+        String parsedMsg = gsonMsg.toJson(message);
 
-        boradcastreceiver = new receiverhe
+        Intent intent= new Intent("localBroadcastMessage");
+        intent.putExtra("messageContent",parsedMsg);
+        LocalBroadcastManager.getInstance(PushService.this).sendBroadcast(intent);
+        Log.d("DEBUG", "Sending boradcast!");
 
-                @override
-        pi
-        covnversation.post
-        ;
-        //BROADCAST TO MESSAGE ACTIVIVIT
 
-          */
       sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
       }
       else{
@@ -233,6 +227,8 @@ public class PushService extends Service {
       }
     }
   };
+
+
   
   private void sendPushNotification(Context context, String content, String json_msg){
 
@@ -269,5 +265,4 @@ public class PushService extends Service {
     toast.setDuration(Toast.LENGTH_SHORT);
     toast.show();
   }
- 
 }
