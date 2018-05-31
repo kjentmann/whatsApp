@@ -15,10 +15,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static edu.upc.whatsapp.comms.Comms.gson;
 import edu.upc.whatsapp.service.PushService;
 import entity.Message;
 import entity.UserInfo;
+
+import static edu.upc.whatsapp.comms.Comms.gson;
 
 public class _GlobalState extends Application {
 

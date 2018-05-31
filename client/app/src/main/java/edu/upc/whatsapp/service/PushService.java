@@ -63,12 +63,13 @@ public class PushService extends Service {
   private class MyTimerTask extends TimerTask {
     public void run() {
       if(globalState.my_user==null){
+        sendMessageToHandler("trouble","cant find local user");
+
         return;
       }
       ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
       NetworkInfo networkInfo = conMan.getActiveNetworkInfo();
       if (networkInfo != null && networkInfo.isConnected() && !connectedToServer) {
-        sendMessageToHandler("open","trying to reconnect to server!");
         connectToServer();
       }
     }
@@ -206,10 +207,8 @@ public class PushService extends Service {
         Message message = (Message) gson.fromJson(content,Message.class);
         Log.d("DEBUG", "Got push from " + message.getUserSender());
 
-        //if (globalState.MessagesActivity_visible==false){
           globalState.user_to_talk_to=message.getUserSender();
           globalState.save_user_to_talk_to(); // in case of app closed while notification still exist
-        //}
 
         Gson  gsonMsg = new Gson();
         String parsedMsg = gsonMsg.toJson(message);

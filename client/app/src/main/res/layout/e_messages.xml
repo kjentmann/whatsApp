@@ -14,13 +14,20 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="356dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:alpha="0.7"
         android:background="@android:color/holo_blue_light"
+        android:fadingEdge="horizontal|vertical"
+        android:fadingEdgeLength="10dp"
+        android:gravity="center_horizontal"
+        android:shadowColor="@android:color/darker_gray"
+        android:shadowRadius="4"
+        android:soundEffectsEnabled="true"
         android:text="The messages:"
         android:textColor="@color/black"
         android:textSize="28dp" />
@@ -46,15 +53,13 @@
     <LinearLayout
         android:layout_width="328dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_margin="8dp"
         android:background="@android:drawable/editbox_dropdown_light_frame">
 
         <EditText
             android:id="@+id/input"
             android:layout_width="245dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:alpha="0.5"
             android:background="#80d3d3d3"
             android:gravity="top|left"
@@ -69,18 +74,26 @@
                       android:inputType="textNoSuggestions|textVisiblePassword"
                       android:imeOptions="actionSend"            -->
 
-        <Button
-            android:id="@+id/mybutton"
-            android:layout_width="68dp"
-            android:layout_height="37dp"
-            android:layout_gravity="center_horizontal"
-            android:foregroundGravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:onClick="sendText"
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:text="Send" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/mybutton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="7dp"
+                android:foregroundGravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:onClick="sendText"
+                android:padding="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text="Send" />
+        </LinearLayout>
 
     </LinearLayout>
 
