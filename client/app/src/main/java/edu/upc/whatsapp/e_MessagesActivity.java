@@ -1,6 +1,7 @@
 package edu.upc.whatsapp;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -62,7 +63,6 @@ public class e_MessagesActivity extends Activity {
     conversation.setAdapter(adapter);
     setTitle("Private conversation. Logged in as " + globalState.my_user.getName()+" "+globalState.my_user.getSurname()+"");
     setup_input_text();
-    //adapter = new  MyAdapter_messages(e_MessagesActivity.this,globalState.load_messages(), globalState.my_user);
     Log.d("DEBUG","I am user ID  :"+globalState.my_user.getId() +"Want to talk to user id : "+ globalState.user_to_talk_to.getId());
     new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
   }
@@ -96,6 +96,9 @@ public class e_MessagesActivity extends Activity {
       if(message.getUserSender().getId()==adapter.getPartnerId()){
         adapter.addMessage(message);
         adapter.notifyDataSetChanged();
+        globalState.newMessages.remove(adapter.getPartnerId());
+        NotificationManager notifManager= (NotificationManager) globalState.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        notifManager.cancelAll();
       }
 
       Log.d("DEBUG", "Got broadcasted message. Sender: " + message.getUserSender().getId()+ "  talkto: "+

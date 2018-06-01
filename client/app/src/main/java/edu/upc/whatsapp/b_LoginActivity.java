@@ -98,7 +98,7 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
   };
 
   private void toastShow(String text) {
-    Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+    Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
     toast.setGravity(0, 0, 200);
     toast.show();
   }

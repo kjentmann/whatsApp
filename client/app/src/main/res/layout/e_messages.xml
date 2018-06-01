@@ -92,7 +92,8 @@
                 android:paddingBottom="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
-                android:text="Send" />
+                android:text="Send"
+                android:textColor="@color/orange" />
         </LinearLayout>
 
     </LinearLayout>

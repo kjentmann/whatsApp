@@ -31,7 +31,8 @@
             android:layout_marginRight="4dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:text="Log out" />
+            android:text="Logout"
+            android:textColor="@color/orange" />
     </LinearLayout>
 
 </LinearLayout>

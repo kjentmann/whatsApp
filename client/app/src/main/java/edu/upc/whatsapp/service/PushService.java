@@ -37,6 +37,7 @@ import javax.websocket.Session;
 
 import edu.upc.whatsapp.R;
 import edu.upc.whatsapp._GlobalState;
+import edu.upc.whatsapp.a_WelcomeActivity;
 import edu.upc.whatsapp.e_MessagesActivity;
 import entity.Message;
 
@@ -117,7 +118,7 @@ public class PushService extends Service {
       session=client.connectToServer(new PushService.MyEndPoint(),ClientEndpointConfig.Builder.create().build(),URI.create("ws://"+PUSHSERVER+"/push"));
       sendMessageToHandler("open","connected to pushserver");
       connectedToServer=true;
-     sendPushNotification(globalState.getApplicationContext(),"Connected to server","");
+     sendPushInfoNotification(globalState.getApplicationContext(),"Connected to server");
 
 
     }
@@ -217,9 +218,10 @@ public class PushService extends Service {
         LocalBroadcastManager.getInstance(PushService.this).sendBroadcast(intent);
         Log.d("DEBUG", "Sending boradcast!");
 
-        if (globalState.newMessages.contains(message.getUserSender().getId())){
+        if (!globalState.newMessages.contains(message.getUserSender().getId())){
           globalState.newMessages.add(message.getUserSender().getId());
         }
+        Log.d("DEBUG","PUSH NEW MSG" + globalState.newMessages);
 
       sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
       }
@@ -244,7 +246,7 @@ public class PushService extends Service {
       .setContentText(content)
       .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.signal))
       .setContentIntent(pendingIntent)
-      .setContentInfo("1")
+      .setContentInfo("Info")
       .setSmallIcon(R.drawable.signal)
       .setAutoCancel(true);
     
@@ -254,14 +256,34 @@ public class PushService extends Service {
     NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     nm.notify(2, notification);
   }
+  private void sendPushInfoNotification(Context context, String content){
 
+    Intent mIntent = new Intent(context, a_WelcomeActivity.class);
+    mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+    Notification.Builder mBuilder = new Notification.Builder(context)
+            .setContentTitle("Push service working!")
+            .setContentText("Tap to text")
+            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.signal))
+            .setContentIntent(pendingIntent)
+            .setContentInfo("aldrimer")
+            .setSmallIcon(R.drawable.signal)
+            .setAutoCancel(true);
+
+    Notification notification = mBuilder.build();
+    notification.defaults |= Notification.DEFAULT_SOUND;
+
+    NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    nm.notify(3, notification);
+  }
   private  void closeAllNotifications(){
     NotificationManager notifManager= (NotificationManager) this.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
     notifManager.cancelAll();
   }
 
   private void toastShow(String text) {
-    Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+    Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
     toast.setGravity(0, 0, 200);
     toast.setDuration(Toast.LENGTH_SHORT);
     toast.show();

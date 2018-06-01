@@ -27,6 +27,7 @@ public class _GlobalState extends Application {
   public boolean MessagesActivity_visible;
   public List<Integer> newMessages;
 
+
   @Override
   public void onCreate() {
     super.onCreate();
@@ -35,6 +36,15 @@ public class _GlobalState extends Application {
     if(isThere_my_user()){
       load_my_user();
     }
+  }
+
+  public void logOut(){
+    remove_my_user();
+    remove_user_to_talk_to();
+   // remove_messages();
+    pushStop();
+    my_user=null;
+    toastShow("Logged out");
   }
 
   public void pushStart(){
@@ -226,7 +236,7 @@ public class _GlobalState extends Application {
   }
 
   private void toastShow(String text) {
-    Toast toast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+    Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
     toast.setGravity(0, 0, 200);
     toast.show();
   }
