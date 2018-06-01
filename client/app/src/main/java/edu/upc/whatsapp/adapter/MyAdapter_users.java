@@ -13,13 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.List;
 
 import edu.upc.whatsapp.R;
-import edu.upc.whatsapp.comms.RPC;
-import edu.upc.whatsapp.d_UsersListActivity;
 import entity.UserInfo;
-import java.util.List;
 
 /**
  *
@@ -29,10 +26,13 @@ public class MyAdapter_users extends BaseAdapter {
 
     Context context;
     public List<UserInfo> users;
-
+    private List<Integer> newMessages;
     public MyAdapter_users(Context context, List<UserInfo> users) {
       this.context = context;
       this.users = users;
+      this.newMessages=newMessages;
+
+
     }
 
     public int getCount() {
@@ -50,6 +50,13 @@ public class MyAdapter_users extends BaseAdapter {
         TextView latsName = (TextView) ((LinearLayout) convertView).findViewById(R.id.row_twotextviews_surname);
         latsName.setText(user.getSurname());
       //...
+
+        /*Future
+        if (newMessages.contains(user.getId())){
+            firstName.setTextColor(Color.rgb(255,102,0));
+            firstName.setText("! " + user.getName());
+        }*/
+
       return convertView;
     }
 

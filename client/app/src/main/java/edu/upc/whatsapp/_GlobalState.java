@@ -25,10 +25,12 @@ public class _GlobalState extends Application {
 
   public UserInfo my_user, user_to_talk_to;
   public boolean MessagesActivity_visible;
+  public List<Integer> newMessages;
 
   @Override
   public void onCreate() {
     super.onCreate();
+    newMessages = new ArrayList<Integer>();
 
     if(isThere_my_user()){
       load_my_user();

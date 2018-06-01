@@ -40,20 +40,18 @@ import edu.upc.whatsapp._GlobalState;
 import edu.upc.whatsapp.e_MessagesActivity;
 import entity.Message;
 
-import static edu.upc.whatsapp.comms.Comms.ENDPOINT;
-
 public class PushService extends Service {
-
   private _GlobalState globalState;
   private Timer timer;
   private boolean connectedToServer;
   private Session session;
-
+  private String PUSHSERVER ="46.249.225.122:62987/whatsappServer";
+  //address need to be local in file when rinning solo on boot.
   @Override
   public void onCreate() {
     super.onCreate();
     globalState = (_GlobalState) getApplication();
-    toastShow("PushService created");
+   // toastShow("PushService created");
     Log.d("DEBUG","PushService created");
     timer = new Timer();
     timer.scheduleAtFixedRate(new MyTimerTask(), 3000, 120000);
@@ -112,15 +110,16 @@ public class PushService extends Service {
   }
 
 
-
+//ENDPOINT
   private void connectToServer(){
     try {
       ClientManager client = ClientManager.createClient();
-      session=client.connectToServer(new PushService.MyEndPoint(),
-          ClientEndpointConfig.Builder.create().build(),
-          URI.create(ENDPOINT));
-      sendMessageToHandler("open","connected ToServer");
+      session=client.connectToServer(new PushService.MyEndPoint(),ClientEndpointConfig.Builder.create().build(),URI.create("ws://"+PUSHSERVER+"/push"));
+      sendMessageToHandler("open","connected to pushserver");
       connectedToServer=true;
+     sendPushNotification(globalState.getApplicationContext(),"Connected to server","");
+
+
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -135,7 +134,7 @@ public class PushService extends Service {
       Log.d("DEBUG","Disconnect from server called...");
       try {
         session.close();
-        sendMessageToHandler("close","disconnectFromServer");
+       // sendMessageToHandler("close","disconnectFromServer");
 
       } catch (IOException e) {
         e.printStackTrace();
@@ -218,6 +217,9 @@ public class PushService extends Service {
         LocalBroadcastManager.getInstance(PushService.this).sendBroadcast(intent);
         Log.d("DEBUG", "Sending boradcast!");
 
+        if (globalState.newMessages.contains(message.getUserSender().getId())){
+          globalState.newMessages.add(message.getUserSender().getId());
+        }
 
       sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
       }
