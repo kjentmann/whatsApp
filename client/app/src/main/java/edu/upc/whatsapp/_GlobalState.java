@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,6 +34,7 @@ public class _GlobalState extends Application {
   public void onCreate() {
     super.onCreate();
     newMessages = new ArrayList<Integer>();
+    load_new_msgs();
 
     if(isThere_my_user()){
       load_my_user();
@@ -68,6 +71,8 @@ public class _GlobalState extends Application {
     }
     return false;
   }
+
+
   public void load_my_user(){
     try{
       FileInputStream fis = openFileInput("my_user");
@@ -99,6 +104,39 @@ public class _GlobalState extends Application {
       e.printStackTrace();
     }
   }
+
+  public void load_new_msgs(){
+    try{
+      FileInputStream fis = openFileInput("new_messages");
+      BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+      newMessages =  gson.fromJson(br,  new TypeToken<ArrayList<Integer>>(){}.getType());
+      br.close();
+      fis.close();
+      Log.d("DEBUG","Loaded new msgs" +  newMessages);
+
+    }
+    catch(Exception e){
+      Log.d("DEBUG","Exception when loading newmsgsr");
+    }
+  }
+  public void save_new_msgs(){
+    try {
+      FileOutputStream fos = openFileOutput("new_messages", MODE_PRIVATE);
+      PrintWriter pw = new PrintWriter(fos);
+
+      pw.println(gson.toJson(newMessages));
+      pw.flush();
+      pw.close();
+      fos.close();
+      Log.d("DEBUG","saved new msgs" +  newMessages);
+
+    } catch (Exception e) {
+      toastShow("Exception at save_ new msgs");
+      e.printStackTrace();
+    }
+  }
+
+
   public void load_user_to_talk_to(){
     try{
       FileInputStream fis = openFileInput("user_to_talk_to");

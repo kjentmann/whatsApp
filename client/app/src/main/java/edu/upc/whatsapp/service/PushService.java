@@ -57,6 +57,8 @@ public class PushService extends Service {
     timer = new Timer();
     timer.scheduleAtFixedRate(new MyTimerTask(), 3000, 120000);
     globalState.load_my_user();
+    sendPushInfoNotification(globalState.getApplicationContext(),"Connected to server");
+
   }
   
   private class MyTimerTask extends TimerTask {
@@ -118,7 +120,6 @@ public class PushService extends Service {
       session=client.connectToServer(new PushService.MyEndPoint(),ClientEndpointConfig.Builder.create().build(),URI.create("ws://"+PUSHSERVER+"/push"));
       sendMessageToHandler("open","connected to pushserver");
       connectedToServer=true;
-     sendPushInfoNotification(globalState.getApplicationContext(),"Connected to server");
 
 
     }
@@ -222,8 +223,9 @@ public class PushService extends Service {
           globalState.newMessages.add(message.getUserSender().getId());
         }
         Log.d("DEBUG","PUSH NEW MSG" + globalState.newMessages);
+        sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
+        globalState.save_new_msgs();
 
-      sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
       }
       else{
         toastShow(content);
@@ -264,9 +266,10 @@ public class PushService extends Service {
 
     Notification.Builder mBuilder = new Notification.Builder(context)
             .setContentTitle("Push service working!")
-            .setContentText("Tap to text")
+            .setContentText("Tap to get started")
             .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.signal))
             .setContentIntent(pendingIntent)
+
             .setContentInfo("aldrimer")
             .setSmallIcon(R.drawable.signal)
             .setAutoCancel(true);

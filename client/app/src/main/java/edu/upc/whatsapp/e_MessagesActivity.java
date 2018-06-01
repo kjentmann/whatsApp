@@ -97,6 +97,7 @@ public class e_MessagesActivity extends Activity {
         adapter.addMessage(message);
         adapter.notifyDataSetChanged();
         globalState.newMessages.remove(adapter.getPartnerId());
+        globalState.save_new_msgs();
         NotificationManager notifManager= (NotificationManager) globalState.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         notifManager.cancelAll();
       }

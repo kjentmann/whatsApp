@@ -37,6 +37,7 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     globalState = (_GlobalState) getApplication();
     setContentView(R.layout.d_userslist);
     globalState.load_my_user();
+    globalState.load_new_msgs();
     new DownloadUsers_Task().execute();
     try {
         setTitle("Users list. Logged in as " + globalState.my_user.getName() + " " + globalState.my_user.getSurname());
@@ -79,6 +80,7 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
       Log.d("DEBUG","I am  :"+globalState.my_user.getName() +". And want to talk to  : "+ globalState.user_to_talk_to.getName());
       if (globalState.newMessages.contains(globalState.user_to_talk_to.getId())){
           globalState.newMessages.remove(globalState.user_to_talk_to.getId());
+          globalState.save_new_msgs();
           Log.d("DEBUG","removing highlight for "+globalState.user_to_talk_to.getName() );
       }
       startActivity(new Intent(this, e_MessagesActivity.class));
