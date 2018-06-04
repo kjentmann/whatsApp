@@ -93,6 +93,7 @@ public class e_MessagesActivity extends Activity {
       Gson gson = new Gson();
       String msg = intent.getStringExtra("messageContent");
       Message message =  gson.fromJson(msg,Message.class);
+     // message.setContent(madSecurity.decrypt(message.getContent()));
       if(message.getUserSender().getId()==adapter.getPartnerId()){
         adapter.addMessage(message);
         adapter.notifyDataSetChanged();
@@ -182,9 +183,13 @@ public class e_MessagesActivity extends Activity {
     }
   }
 
-  public void sendText(final View view) {
+  public void sendText(final View view)  {
 
     String content = input_text.getText().toString();
+    String encrypted = MadSecurity.encrypt(content);
+    content=encrypted.toString();
+
+
     Date date = new Date();
     Message msg = new Message();
     msg.setContent(content);

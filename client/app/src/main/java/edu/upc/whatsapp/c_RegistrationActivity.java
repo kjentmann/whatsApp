@@ -61,7 +61,7 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
       usrInfo.setName(name_input.getText().toString());
       usrInfo.setSurname(surname_input.getText().toString());
       user.setLogin(login_input.getText().toString());
-      user.setPassword(password_input.getText().toString()); //encrypt?
+      user.setPassword(MadSecurity.encrypt(password_input.getText().toString())); //encrypt?
       user.setId(usrInfo.getId());                           //hash?
       user.setEmail(email_input.getText().toString());
       user.setUserInfo(usrInfo);
@@ -69,8 +69,8 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
       String paramTest = parameterCheck(user);
       if (paramTest!=""){
           toastShow(paramTest);
-          user=null;
-          return;
+         // user=null;
+         // return; //FIX enable to increase security
         }
 
       progressDialog = ProgressDialog.show(this, "RegistrationActivity", "Registering for service...");

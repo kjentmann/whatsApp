@@ -35,6 +35,7 @@ import javax.websocket.EndpointConfig;
 import javax.websocket.MessageHandler;
 import javax.websocket.Session;
 
+import edu.upc.whatsapp.MadSecurity;
 import edu.upc.whatsapp.R;
 import edu.upc.whatsapp._GlobalState;
 import edu.upc.whatsapp.a_WelcomeActivity;
@@ -223,7 +224,7 @@ public class PushService extends Service {
           globalState.newMessages.add(message.getUserSender().getId());
         }
         Log.d("DEBUG","PUSH NEW MSG" + globalState.newMessages);
-        sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+message.getContent(),msg.toString());
+        sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+ MadSecurity.decrypt(message.getContent()),msg.toString());
         globalState.save_new_msgs();
 
       }

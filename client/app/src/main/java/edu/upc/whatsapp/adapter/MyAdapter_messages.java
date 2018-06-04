@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import edu.upc.whatsapp.MadSecurity;
 import edu.upc.whatsapp.R;
 import entity.Message;
 import entity.UserInfo;
@@ -96,7 +97,7 @@ public class MyAdapter_messages extends BaseAdapter {
     ((TextView) convertView.findViewById(R.id.row_date)).setText(sdf.format(date));
 
     //...
-    ((TextView)convertView.findViewById(R.id.row_content)).setText(messages.get(position).getContent());
+    ((TextView)convertView.findViewById(R.id.row_content)).setText(MadSecurity.decrypt(messages.get(position).getContent()));
 
     ((TextView) convertView.findViewById(R.id.row_hour)).setText(sdf2.format(date));
 

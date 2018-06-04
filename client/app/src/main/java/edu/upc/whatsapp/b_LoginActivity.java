@@ -40,7 +40,7 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
         EditText password_input   = (EditText)findViewById(R.id.password_input);
         user = new User();
         user.setLogin(login_input.getText().toString());
-        user.setPassword(password_input.getText().toString());
+        user.setPassword(MadSecurity.encrypt(password_input.getText().toString()));
               //...
         progressDialog = ProgressDialog.show(this, "LoginActivity", "Logging into the server...");
         // if there's still a running thread doing something, we don't create a new one
