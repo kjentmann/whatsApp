@@ -10,7 +10,18 @@ buildscript {
     dependencies {
         classpath 'com.android.support:support-v4:19.0.+'
     }
+
 }
+
+
+dependencies {
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+
 
 allprojects {
     repositories {

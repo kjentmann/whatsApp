@@ -10,14 +10,12 @@ import java.util.Date;
  */
 public interface Comms {
 
-    //String WhatsApp_server = "46.249.225.122:62987/whatsappServer";      // Remote  glassfish  raspberry pi norway
 
+     // String WhatsApp_server = "192.168.0.53:22223/whatsappServer";          //Local network server
+   // String WhatsApp_server = "10.0.2.2:22223/whatsappServer";                 //For emulator use only
 
-        String WhatsApp_server = "192.168.1.105:22223/whatsappServer";    //Local network - netbeans
-   // String WhatsApp_server = "10.0.2.2:22223/whatsappServer";             //For emulator use
-
-    String url_rpc = "http://"+WhatsApp_server+"/rpc";
-  String ENDPOINT = "ws://"+WhatsApp_server+"/push";
-//  Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss+01:00").create();
-  Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateSerializerDeserializer()).create();
+     String WhatsApp_server = "mads.dnsdynamic.com:62987/whatsappServer";       // Remote raspberry pi server @Norway
+     String url_rpc = "http://"+WhatsApp_server+"/rpc";
+     String ENDPOINT = "ws://"+WhatsApp_server+"/push";
+     Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateSerializerDeserializer()).create();
 }

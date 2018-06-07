@@ -74,6 +74,7 @@ public class e_MessagesActivity extends Activity {
     LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("localBroadcastMessage"));
     super.onResume();
     globalState.MessagesActivity_visible=true;
+    if (!globalState.isPushRunning()) globalState.pushStart();
     Log.d("DEBUG","On Resume");
     //...
   }
@@ -93,7 +94,6 @@ public class e_MessagesActivity extends Activity {
       Gson gson = new Gson();
       String msg = intent.getStringExtra("messageContent");
       Message message =  gson.fromJson(msg,Message.class);
-     // message.setContent(madSecurity.decrypt(message.getContent()));
       if(message.getUserSender().getId()==adapter.getPartnerId()){
         adapter.addMessage(message);
         adapter.notifyDataSetChanged();
@@ -103,8 +103,7 @@ public class e_MessagesActivity extends Activity {
         notifManager.cancelAll();
       }
 
-      Log.d("DEBUG", "Got broadcasted message. Sender: " + message.getUserSender().getId()+ "  talkto: "+
-              globalState.user_to_talk_to.getId() + "current Parnter " + adapter.getPartnerId() );
+      Log.d("DEBUG", "Got broadcast msg. Sender: " + message.getUserSender().getId()+ "  talkto: "+ globalState.user_to_talk_to.getId() + "current Parnter " + adapter.getPartnerId() );
     }
   };
 
@@ -132,7 +131,6 @@ public class e_MessagesActivity extends Activity {
         }
       }
       catch (Exception e){
-        Log.d("DEBUG", "Network error while trying to download new messages");
         all_messages = globalState.load_messages();
       }
 
@@ -159,7 +157,7 @@ public class e_MessagesActivity extends Activity {
 
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
-      // To aviod trouble with the very first message in a conversation (last message dont exist yet).
+      // To avoid trouble with the very first message in a conversation (last message don't exist yet).
       if(adapter !=null && adapter.getLastMessage()==null)
         return RPC.retrieveMessages(globalState.user_to_talk_to.getId(), globalState.my_user.getId());
       else if (adapter != null)

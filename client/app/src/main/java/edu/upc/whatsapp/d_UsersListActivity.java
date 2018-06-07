@@ -34,7 +34,8 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    globalState = (_GlobalState) getApplication();
+
+        globalState = (_GlobalState) getApplication();
     setContentView(R.layout.d_userslist);
     globalState.load_my_user();
     globalState.load_new_msgs();
@@ -61,6 +62,7 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
         LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter("localBroadcastMessage"));
         NotificationManager notifManager= (NotificationManager) globalState.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         notifManager.cancelAll();
+        if (!globalState.isPushRunning()) globalState.pushStart();
         if (adapter!=null) {
             adapter.newMessages=globalState.newMessages;
             adapter.notifyDataSetChanged();

@@ -57,10 +57,9 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
     public void run() {
       Message msg = handler.obtainMessage();
       Bundle b = new Bundle();
-      UserInfo userRequest = new UserInfo();
-      userRequest = RPC.login(user);
+      UserInfo userRequest = RPC.login(user);
       b.putSerializable("userInfo",userRequest);
-      //...
+
       msg.setData(b);
       handler.sendMessage(msg);
     }
@@ -75,7 +74,6 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
       progressDialog.dismiss();
 
       UserInfo userInfo = (UserInfo) msg.getData().getSerializable("userInfo");
-
       if (userInfo.getId() >= 0) {
 
         globalState.my_user=userInfo;

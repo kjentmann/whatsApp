@@ -12,3 +12,7 @@ l# whatsApp
 - Add a message broadcast in the pushserivce and a reviever in messageactivity to connect the service to the activity
 - Remove the timer from messageactivity, and change onResume() to fetch new messages, only then and on send it is needed. 
 - Implement remove notification when conversation is open
+- Add emoji support
+- Encrytp messages and passwords
+- Implement DH key-exhange 
+

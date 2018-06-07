@@ -47,8 +47,8 @@ public class PushService extends Service {
   private Timer timer;
   private boolean connectedToServer;
   private Session session;
-  private String PUSHSERVER ="46.249.225.122:62987/whatsappServer";
-  //address need to be local in file when rinning solo on boot.
+  private String PUSHSERVER ="mads.dnsdynamic.com:62987/whatsappServer";
+  //address need to be local in file when starting solo on boot.
   @Override
   public void onCreate() {
     super.onCreate();
@@ -56,7 +56,7 @@ public class PushService extends Service {
    // toastShow("PushService created");
     Log.d("DEBUG","PushService created");
     timer = new Timer();
-    timer.scheduleAtFixedRate(new MyTimerTask(), 3000, 120000);
+    timer.scheduleAtFixedRate(new MyTimerTask(), 3000, 20000);
     globalState.load_my_user();
     sendPushInfoNotification(globalState.getApplicationContext(),"Connected to server");
 
@@ -119,13 +119,12 @@ public class PushService extends Service {
     try {
       ClientManager client = ClientManager.createClient();
       session=client.connectToServer(new PushService.MyEndPoint(),ClientEndpointConfig.Builder.create().build(),URI.create("ws://"+PUSHSERVER+"/push"));
-      sendMessageToHandler("open","connected to pushserver");
+      sendMessageToHandler("open","connected to push");
       connectedToServer=true;
-
 
     }
     catch (Exception e) {
-      e.printStackTrace();
+      //e.printStackTrace();
       sendMessageToHandler("error","connectToServer error");
       connectedToServer = false;
       session = null;
@@ -140,12 +139,14 @@ public class PushService extends Service {
        // sendMessageToHandler("close","disconnectFromServer");
 
       } catch (IOException e) {
-        e.printStackTrace();
+        //e.printStackTrace();
         sendMessageToHandler("error","disconnectFromServer error");
       }
     }
   }
   //this is executed by an independent thread:
+
+
   public class MyEndPoint extends Endpoint {
 
     @Override
@@ -153,7 +154,7 @@ public class PushService extends Service {
       try {
         Gson gson = new Gson();
         session.getBasicRemote().sendText(gson.toJson(globalState.my_user));
-        sendMessageToHandler("open","Push connection opened");
+        //sendMessageToHandler("open","Push connection opened");
         session.addMessageHandler(new MessageHandler.Whole<String>() {
 
           @Override
@@ -164,14 +165,14 @@ public class PushService extends Service {
 
       }
       catch (Exception e) {
-        e.printStackTrace();
+        //e.printStackTrace();
         sendMessageToHandler("error","onOpen error: "+e.getMessage());
       }
     }
 
     @Override
     public void onError(Session session, Throwable t) {
-      t.printStackTrace();
+     // t.printStackTrace();
       sendMessageToHandler("error","onError error: "+t.getMessage());
     }
 
@@ -207,7 +208,7 @@ public class PushService extends Service {
 
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
         Message message = (Message) gson.fromJson(content,Message.class);
-        Log.d("DEBUG", "Got push from " + message.getUserSender());
+        Log.d("DEBUG", "Got push from " + message.getUserSender().getName());
 
           globalState.user_to_talk_to=message.getUserSender();
           globalState.save_user_to_talk_to(); // in case of app closed while notification still exist
@@ -223,7 +224,7 @@ public class PushService extends Service {
         if (!globalState.newMessages.contains(message.getUserSender().getId())){
           globalState.newMessages.add(message.getUserSender().getId());
         }
-        Log.d("DEBUG","PUSH NEW MSG" + globalState.newMessages);
+
         sendPushNotification(globalState.getApplicationContext(),message.getUserSender().getName()+": "+ MadSecurity.decrypt(message.getContent()),msg.toString());
         globalState.save_new_msgs();
 

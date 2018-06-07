@@ -11,6 +11,5 @@ public class Bootup_receiver extends BroadcastReceiver {
 
         Intent myIntent = new Intent(context, PushService.class);
         context.startService(myIntent);
-
     }
 }

@@ -18,10 +18,6 @@ import edu.upc.whatsapp.R;
 import entity.Message;
 import entity.UserInfo;
 
-/**
- *
- * @author juanluis
- */
 public class MyAdapter_messages extends BaseAdapter {
 
   private Context mContext;
@@ -94,11 +90,9 @@ public class MyAdapter_messages extends BaseAdapter {
       convertView.findViewById(R.id.row_date).setVisibility(View.VISIBLE);
     else
       convertView.findViewById(R.id.row_date).setVisibility(View.GONE);
+
     ((TextView) convertView.findViewById(R.id.row_date)).setText(sdf.format(date));
-
-    //...
     ((TextView)convertView.findViewById(R.id.row_content)).setText(MadSecurity.decrypt(messages.get(position).getContent()));
-
     ((TextView) convertView.findViewById(R.id.row_hour)).setText(sdf2.format(date));
 
     return convertView;
@@ -114,12 +108,10 @@ public class MyAdapter_messages extends BaseAdapter {
 
   @Override
   public int getItemViewType(int position) {
-      if (messages.get(position).getUserSender().getId() == my_user.getId()){
+      if (messages.get(position).getUserSender().getId() == my_user.getId())
       return 0;
-    }
-    else{
+    else
       return 1;
-    }
   }//...
 
   @Override

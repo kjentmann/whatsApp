@@ -1,5 +1,6 @@
 package edu.upc.whatsapp;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -69,8 +70,8 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
       String paramTest = parameterCheck(user);
       if (paramTest!=""){
           toastShow(paramTest);
-         // user=null;
-         // return; //FIX enable to increase security
+          user=null;
+          return; //FIX enable to increase security
         }
 
       progressDialog = ProgressDialog.show(this, "RegistrationActivity", "Registering for service...");
@@ -88,18 +89,15 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
     public void run() {
       Message msg = handler.obtainMessage();
       Bundle b = new Bundle();
-     // UserInfo registrationCandidate = new UserInfo();
       UserInfo registrationCandidate = RPC.registration(user);
       b.putSerializable("userInfo",registrationCandidate);
-
-      //...
-
 
       msg.setData(b);
       handler.sendMessage(msg);
     }
   }
 
+  @SuppressLint("HandlerLeak")
   Handler handler = new Handler() {
     @Override
     public void handleMessage(Message msg) {

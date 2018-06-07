@@ -9,7 +9,6 @@ public class MadSecurity {
     static byte[] iv = {-89, -19, 17, -83, 86, 106, -31, 30, -5, -111, 61, -75, -84, 95, 120, -53};
      static Encryption encryption = Encryption.getDefault(key, salt, iv);
 
-
     public MadSecurity() {
 /*
             try {
@@ -33,7 +32,6 @@ public class MadSecurity {
 */
     }
 
-
     public static String encrypt(String strClearText) {
         String encrypted = "";
         try {
@@ -54,8 +52,6 @@ public class MadSecurity {
         } catch (Exception e) {
             decrypted = "** Decryption error **";
         }
-        //  byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-        // String decodedString = new String(decodedBytes);
         return decrypted;
     }
 }

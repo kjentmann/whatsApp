@@ -52,17 +52,17 @@ public class _GlobalState extends Application {
 
   public void pushStart(){
     if (!isPushRunning()) {
-      startService(new Intent(this, PushService.class));   //TODO UNCOMMENT THIS WHEN PUSH
+      startService(new Intent(this, PushService.class));
 
     }
     }
   public void pushStop(){
-    stopService((new Intent(this, PushService.class)));   //TODO UNCOMMENT THIS WHEN PUSH
-    stopService((new Intent(this, PushService.MyEndPoint.class)));   //TODO UNCOMMENT THIS WHEN PUSH
+    stopService((new Intent(this, PushService.class)));
+    //stopService((new Intent(this, PushService.MyEndPoint.class)));
 
   }
 
-  private boolean isPushRunning() {
+  public boolean isPushRunning() {
     ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
     for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
       if (PushService.class.getName().equals(service.service.getClassName())) {
@@ -148,7 +148,7 @@ public class _GlobalState extends Application {
       fis.close();
     }
     catch(Exception e){
-      toastShow("Exception at load_my_user");
+      //toastShow("Exception at load_my_user");
       e.printStackTrace();
     }
   }
